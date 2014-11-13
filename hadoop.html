@@ -15,6 +15,13 @@
 <body>
     <!-- Wrap the entire slide show in a div using the "reveal" class. -->
     <div class="reveal">
+    <div id="arc-logo" style="background: url(images/arc-logo.png);
+                        background-size: 516px 74px;
+                        position: absolute;
+                        bottom: 30px;
+                        left: 50px;
+                        width: 516px;
+                        height: 74px;"></div>
         <!-- Wrap all slides in a single "slides" class -->
         <div class="slides">
             <section id="title">
@@ -67,7 +74,7 @@
                	<li>Can’t use Linux Tools (cp, mv, mkdir)</li>
                </ul>
             </section>
-            <section id="dfs">
+            <section id="dfs" data-state="header1">
                      <h2>Common HDFS Commands</h2>
 <pre><code>
 #List files in HDFS directory
@@ -106,7 +113,7 @@ $ hdfs dfs -ls -help ls
         { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
 
         // Remote control your reveal.js presentation using a touch device
-        { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } },
+        //{ src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } },
 
         // MathJax
         { src: 'plugin/math/math.js', async: true }
