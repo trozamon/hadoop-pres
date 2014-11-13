@@ -1,0 +1,120 @@
+
+<!doctype html>
+<html lang="en">	
+<head>
+<!-- taken from tutorial http://htmlcheats.com/reveal-js/reveal-js-tutorial-reveal-js-for-beginners/ -->
+    <meta charset="utf-8">
+    <title>Big Data with Haddop/Spark</title>
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">    
+    <!--Add support for earlier versions of Internet Explorer -->
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <!-- Wrap the entire slide show in a div using the "reveal" class. -->
+    <div class="reveal">
+        <!-- Wrap all slides in a single "slides" class -->
+        <div class="slides">
+            <section id="title">
+                    <h1>Big Data with Hadoop and Spark</h2>
+                    <p>Brock Palen</p>
+                    <p>brockp@umich.edu</p>
+            </section>
+            <section id="links">
+                     <h1>Links / Guides</h1>
+                     <a href="http://caen.github.io/hadoop/user-hadoop.html">ARC Fladoop User Guide</a><br />
+                     <a href="http://fluxhpc.blogspot.com/2014/09/arc-fladoop-data-platform-hadoop.html">Hardware -- Fladdop Archatecture</a><br />
+                     <a href="https://www.udacity.com/course/ud617">Free UDACITY Hadoop / MapReduce Course</a><br />
+                     <iframe width="420" height="315" src="http://www.youtube.com/embed/bcjSe0xCHbE" frameborder="0" allowfullscreen></iframe>
+            </section>
+            <section id="what-is-hadoop">
+                     <h2>What is Hadoop?</h2>
+                     <p>The Apache Hadoop software library is a <strong class="fragment highlight-green">framework</strong> that allows for the <strong class="fragment highlight-green">distributed processing</strong> of large data sets across clusters of computers using simple programming models. It is designed to scale up from single servers to thousands of machines, each offering local computation and storage.</p>
+            <aside class="notes">
+              <p>
+	- 
+              </p>
+            </aside>
+            </section>
+            <section id="avoid-map-reduce">
+                     <h2>Avoid MapReduce</h2>
+                        <ul>
+                        
+                        	<li>Lowest level way to control Hadoop</li>
+                        	<li>Most difficult to work with</li>
+                        	<li>Java - Take it as you will</li>
+                        
+                        </ul>
+            </section>
+            <section id="alternatives">
+                     <h2>Alternatives to MapReduce</h2>
+                        <ul>
+                        	<li><a href="http://hive.apache.org/">HIVE - Data Warehouse SQL Like</a></li>
+                        	<li><a href="http://pig.apache.org/">Pig - Platform for analyzing large data sets</a></li>
+                        	<li><a href="http://spark.apache.org/">Spark - A fast and general compute engine for Hadoop data, Graph Data, and Machine Learning</a></li>
+                        	<li><a href="http://mahout.apache.org/">Mahout - A Scalable machine learning and data mining library</a></li>
+                        </ul>
+            </section>
+            <section id="hdfs">
+                     <h1>Getting Data on and Off The Hadoop File System (HDFS)</h1>
+            </section>
+            <section id="hdfs-about">
+               <ul>
+               	<li>Virtual File System</li>
+               	<li>Looks/Acts like any Linux System</li>
+               	<li>Can’t use Linux Tools (cp, mv, mkdir)</li>
+               </ul>
+            </section>
+            <section id="dfs">
+                     <h2>Common HDFS Commands</h2>
+<pre><code>
+#List files in HDFS directory
+$ hdfs dfs -ls
+
+#get full list of HDFS options
+$ hdfs dfs -help
+
+#get help with single HDFS option, leave off the -
+$ hdfs dfs -ls -help ls
+</code></pre>
+            </section>
+        </div>
+    </div>
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+ 
+    <script>
+        // Required, even if empty.
+        Reveal.initialize({
+    dependencies: [
+        // Cross-browser shim that fully implements classList - https://github.com/eligrey/classList.js/
+        { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+
+        // Interpret Markdown in <section> elements
+        { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+
+        // Syntax highlight for <code> elements
+        { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+
+        // Zoom in and out with Alt+click
+        { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+
+        // Speaker notes
+        { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+
+        // Remote control your reveal.js presentation using a touch device
+        { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } },
+
+        // MathJax
+        { src: 'plugin/math/math.js', async: true }
+    ]
+        });
+
+        <!-- add slide numbering -->
+        Reveal.configure({ slideNumber: true });
+    </script>
+</body>
+</html>
