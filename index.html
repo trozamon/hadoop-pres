@@ -39,9 +39,10 @@
             <section id="what-is-hadoop">
                      <h2>What is Hadoop?</h2>
                      <p>The Apache Hadoop software library is a <strong class="fragment highlight-green">framework</strong> that allows for the <strong class="fragment highlight-green">distributed processing</strong> of large data sets across clusters of computers using simple programming models. It is designed to scale up from single servers to thousands of machines, each offering local computation and storage.</p>
-            <aside class="notes">
+            <aside class="notes" data-markdown>
               <p>
-	- 
+	      - Don't focus on MapReduce. 
+              - It is difficult and requires building a pair of Java classes.  Most users with big data will be better served by using applications on top of Hadoop. Think of this as writing your own program, vs. using an exsiting one (C-Code vs. R).
               </p>
             </aside>
             </section>
@@ -63,9 +64,11 @@
                         	<li><a href="http://spark.apache.org/">Spark - A fast and general compute engine for Hadoop data, Graph Data, and Machine Learning</a></li>
                         	<li><a href="http://mahout.apache.org/">Mahout - A Scalable machine learning and data mining library</a></li>
                         </ul>
+			<p>More on these later</p>
+
             </section>
             <section id="hdfs">
-                     <h1>Getting Data on and Off The Hadoop File System (HDFS)</h1>
+                     <h2>The Hadoop File System (HDFS)</h2>
             </section>
             <section id="hdfs-about">
                <ul>
@@ -74,11 +77,14 @@
                	<li>Can’t use Linux Tools (cp, mv, mkdir)</li>
                </ul>
             </section>
-            <section id="dfs" data-state="header1">
+            <section id="dfs">
                      <h2>Common HDFS Commands</h2>
-<pre><code>
+<pre><code data-trim>
 #List files in HDFS directory
 $ hdfs dfs -ls
+
+#make a directory
+$ hdfs dfs -mkdir directory
 
 #get full list of HDFS options
 $ hdfs dfs -help
@@ -113,7 +119,7 @@ $ hdfs dfs -ls -help ls
         { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
 
         // Remote control your reveal.js presentation using a touch device
-        //{ src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } },
+        { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } },
 
         // MathJax
         { src: 'plugin/math/math.js', async: true }
@@ -121,7 +127,10 @@ $ hdfs dfs -ls -help ls
         });
 
         <!-- add slide numbering -->
-        Reveal.configure({ slideNumber: true });
+        Reveal.configure({
+	                  slideNumber: true,
+			  history: true
+			  });
     </script>
 </body>
 </html>
