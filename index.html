@@ -4,7 +4,7 @@
 <head>
 <!-- taken from tutorial http://htmlcheats.com/reveal-js/reveal-js-tutorial-reveal-js-for-beginners/ -->
     <meta charset="utf-8">
-    <title>Big Data with Haddop/Spark</title>
+    <title>Big Data with Hadoop/Spark</title>
     <link rel="stylesheet" href="css/reveal.min.css">
     <link rel="stylesheet" href="css/theme/default.css" id="theme">    
     <!--Add support for earlier versions of Internet Explorer -->
@@ -25,20 +25,25 @@
         <!-- Wrap all slides in a single "slides" class -->
         <div class="slides">
             <section id="title">
-                    <h1>Big Data with Hadoop and Spark</h2>
+                    <h1>Big Data with Hadoop and Spark</h1>
                     <p>Brock Palen</p>
                     <p>brockp@umich.edu</p>
             </section>
             <section id="links">
                      <h1>Links / Guides</h1>
-                     <a href="http://caen.github.io/hadoop/user-hadoop.html">ARC Fladoop User Guide</a><br />
-                     <a href="http://fluxhpc.blogspot.com/2014/09/arc-fladoop-data-platform-hadoop.html">Hardware -- Fladdop Archatecture</a><br />
-                     <a href="https://www.udacity.com/course/ud617">Free UDACITY Hadoop / MapReduce Course</a><br />
+                     <a href="http://caen.github.io/hadoop/user-hadoop.html">ARC Fladoop (Flux Hadoop) User Guide</a><br />
+                     <a href="http://fluxhpc.blogspot.com/2014/09/arc-fladoop-data-platform-hadoop.html">Hardware - Fladoop Architecture</a><br />
+                     <a href="https://www.udacity.com/course/ud617">Free UDACITY Hadoop/MapReduce Course Materials</a><br />
                      <iframe width="420" height="315" src="http://www.youtube.com/embed/bcjSe0xCHbE" frameborder="0" allowfullscreen></iframe>
             </section>
             <section id="what-is-hadoop">
                      <h2>What is Hadoop?</h2>
                      <p>The Apache Hadoop software library is a <strong class="fragment highlight-green">framework</strong> that allows for the <strong class="fragment highlight-green">distributed processing</strong> of large data sets across clusters of computers using simple programming models. It is designed to scale up from single servers to thousands of machines, each offering local computation and storage.</p>
+                     <br />
+                     <br />
+                     <br />
+                     <h3>What is Fladoop?</h3>
+                     <p>Fladoop is the name of the Flux Hadoop cluster, just as Flux is the name of the general HPC cluster.</p>
             <aside class="notes" data-markdown>
               <p>
 	      - Don't focus on MapReduce. 
@@ -69,30 +74,59 @@
             </section>
             <section id="hdfs">
                      <h2>The Hadoop File System (HDFS)</h2>
+                     <!-- TODO Fix this image - has fladdop instead of fladoop -->
+                     <img src="images/fladoop20.jpg">
             </section>
             <section id="hdfs-about">
+                    <h2>About HDFS</h2>
                <ul>
-               	<li>Virtual File System</li>
-               	<li>Looks/Acts like any Linux System</li>
-               	<li>Can’t use Linux Tools (cp, mv, mkdir)</li>
+               	<li>Distributed and fault tolerant</li>
+               	<li>Can’t use typical tools(cp, mv, mkdir)</li>
+                <li>Hadoop has HDFS-specific implementations of common tools</li>
+               	<li>Looks like POSIX filesystems</li>
                </ul>
             </section>
             <section id="dfs">
                      <h2>Common HDFS Commands</h2>
-<pre><code data-trim>
-#List files in HDFS directory
+                        <pre><code data-trim>
+# List files HDFS home directory
 $ hdfs dfs -ls
+$ hdfs dfs -ls /user/brockp
 
-#make a directory
+# Make a directory
 $ hdfs dfs -mkdir directory
 
-#get full list of HDFS options
+# Get full list of HDFS options
 $ hdfs dfs -help
 
-#get help with single HDFS option, leave off the -
+# Get help with single HDFS option, leave off the -
 $ hdfs dfs -ls -help ls
-</code></pre>
+                        </code></pre>
             </section>
+            <section id="hdfs-practice1">
+	        <section id="hdfs-practice1-q">
+                        <p>Create a directory in HDFS called <code>arcdata</code> and check its contents.</p>
+                </section>
+                <section id="hdfs-practice1-ans">
+                    <pre><code>
+$ hdfs dfs -mkdir arcdata
+$ hdfs dfs -ls arcdata
+                    </code></pre>
+                </section>
+            </section>
+            <section id="hdfs-get-put">
+		  <h2>Moving to and from HDFS</h2>
+		  <!-- TODO -->
+		  <h3>get / put / distcp / bundle???</h3>
+		  <pre><code>
+$ hdfs dfs -put localfile hdfsdirectory/
+$ hdfs dfs -get hdfsfile  localdirectory/
+
+# distcp is handy for very large files
+# but requires a shared filesystem (/scratch)
+$ hdfs dfs -distcp ...
+		  </code></pre>
+           </section>
         </div>
     </div>
     <script src="lib/js/head.min.js"></script>
@@ -101,6 +135,8 @@ $ hdfs dfs -ls -help ls
     <script>
         // Required, even if empty.
         Reveal.initialize({
+	                  slideNumber: true,
+			  history: true,
     dependencies: [
         // Cross-browser shim that fully implements classList - https://github.com/eligrey/classList.js/
         { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
@@ -126,11 +162,6 @@ $ hdfs dfs -ls -help ls
     ]
         });
 
-        <!-- add slide numbering -->
-        Reveal.configure({
-	                  slideNumber: true,
-			  history: true
-			  });
     </script>
 </body>
 </html>
