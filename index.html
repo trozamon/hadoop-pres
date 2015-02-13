@@ -151,7 +151,7 @@ $ > SELECT ... WHERE ... FROM data GROUP BY ... ORDER BY ...;
 $ hdfs dfs -put data.csv data.csv
 $ spark-shell --master yarn-client
 $
-$ > # Now in interactive Spark console
+$ > # Now in interactive Spark console (Scala)
 $ > val data = sc.textFile('data.csv')
 $ > val data_columns = data.map(line => line.split(','))
 $ > val answer = data_columns.reduceByKey((a, b) => a + b)
@@ -194,6 +194,15 @@ for host in sorted(err_count.keys()):
                    </code></pre>
                    <br />
                    <p>Python can be run on the cluster by writing a mapper and reducer that both read from STDIN and write key-value pairs to STDOUT.</p>
+           </section>
+           <section id="choosing">
+                   <h2>Choosing a tool and language</h2>
+                   <br />
+                   <ul>
+                           <li>Working on structured data? Use Hive or Pig.</li>
+                           <li>Working on unstructured data? Use Python or Scala.</li>
+                           <li>Need extremely high performance? Use Java or Scala.</li>
+                   </ul>
            </section>
         </div>
     </div>
