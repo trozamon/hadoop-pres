@@ -100,7 +100,7 @@ $ hdfs dfs -mkdir directory
 $ hdfs dfs -help
 
 # Get help with single HDFS option, leave off the -
-$ hdfs dfs -ls -help ls
+$ hdfs dfs -help ls
                         </code></pre>
             </section>
             <section id="hdfs-practice1">
@@ -116,17 +116,58 @@ $ hdfs dfs -ls arcdata
             </section>
             <section id="hdfs-get-put">
 		  <h2>Moving to and from HDFS</h2>
-		  <!-- TODO -->
-		  <h3>get / put / distcp / bundle???</h3>
+		  <h3>get / put / distcp</h3>
 		  <pre><code>
 $ hdfs dfs -put localfile hdfsdirectory/
 $ hdfs dfs -get hdfsfile  localdirectory/
 
 # distcp is handy for very large files
 # but requires a shared filesystem (/scratch)
-$ hdfs dfs -distcp ...
+$ hdfs dfs -distcp file:///scratch/my/files hdfs:///user/my/files
 		  </code></pre>
            </section>
+           <section id="hive">
+                   <h2>Hive</h2>
+                   <pre><code>
+$ hdfs dfs -put data.csv data.csv
+$ hive
+$
+$ > # Now in interactive Hive console
+$ >
+$ > CREATE TABLE data (...) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
+$ > LOAD DATA INPATH 'data.csv' OVERWRITE INTO TABLE data;
+$ > SELECT ... WHERE ... FROM data GROUP BY ... ORDER BY ...;
+                   </code></pre>
+                   <br />
+                   <p>Hive supports most of the SQL standard needed on a daily basis.</p>
+           </section>
+           <section id="spark">
+                   <h2>Spark</h2>
+                   <pre><code>
+$ hdfs dfs -put data.csv data.csv
+$ spark-shell --master yarn-client
+$
+$ > # Now in interactive Spark console
+$ > val data = sc.textFile('data.csv')
+$ > val data_columns = data.map(line => line.split(','))
+$ > val answer = data_columns.reduceByKey((a, b) => a + b)
+                   </code></pre>
+                   <br />
+                   <p>Spark supports applying transformations to entire datasets (called Resilient Distributed Datasets). This functional programming model allows complicated transformations to be expressed simply.</p>
+           </section>
+           <section id="Pig">
+                   <h2>Pig</h2>
+                   <pre><code>
+$ hdfs dfs -put data.csv data.csv
+$ pig
+$
+$ > # Now in interactive Pig console
+$ > data = LOAD 'data.csv' AS (name:chararray, ...);
+$ > data_grouped = GROUP data BY name;
+$ > answer = FOREACH data_grouped GENERATE SUM(...);
+                   </code></pre>
+                   <br />
+                   <p>Pig is similar but more in-depth than SQL. Any complex transformations that can't be done in SQL probably can be expressed in Pig.</p>
         </div>
     </div>
     <script src="lib/js/head.min.js"></script>
