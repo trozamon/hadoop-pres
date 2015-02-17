@@ -30,15 +30,12 @@
         <div class="slides">
             <section id="title">
                     <h1>Big Data with Hadoop and Spark</h1>
+                    <br />
                     <p>Brock Palen</p>
                     <p>brockp@umich.edu</p>
-            </section>
-            <section id="links">
-                     <h1>Links / Guides</h1>
-                     <a href="http://caen.github.io/hadoop/user-hadoop.html">ARC Fladoop (Flux Hadoop) User Guide</a><br />
-                     <a href="http://fluxhpc.blogspot.com/2014/09/arc-fladoop-data-platform-hadoop.html">Hardware - Fladoop Architecture</a><br />
-                     <a href="https://www.udacity.com/course/ud617">Free UDACITY Hadoop/MapReduce Course Materials</a><br />
-                     <iframe width="420" height="315" src="http://www.youtube.com/embed/bcjSe0xCHbE" frameborder="0" allowfullscreen></iframe>
+                    <br />
+                    <p>Alec Ten Harmsel</p>
+                    <p>talec@umich.edu</p>
             </section>
             <section id="what-is-hadoop">
                      <h2>What is Hadoop?</h2>
@@ -48,12 +45,13 @@
                      <br />
                      <h3>What is Fladoop?</h3>
                      <p>Fladoop is the name of the Flux Hadoop cluster, just as Flux is the name of the general HPC cluster.</p>
-            <aside class="notes" data-markdown>
-              <p>
-	      - Don't focus on MapReduce. 
-              - It is difficult and requires building a pair of Java classes.  Most users with big data will be better served by using applications on top of Hadoop. Think of this as writing your own program, vs. using an exsiting one (C-Code vs. R).
-              </p>
-            </aside>
+            </section>
+            <section id="links">
+                     <h1>Links / Guides</h1>
+                     <a href="http://caen.github.io/hadoop">ARC Fladoop Documentation</a><br />
+                     <a href="http://fluxhpc.blogspot.com/2014/09/arc-fladoop-data-platform-hadoop.html">Hardware - Fladoop Architecture</a><br />
+                     <a href="https://www.udacity.com/course/ud617">Free UDACITY Hadoop/MapReduce Course Materials</a><br />
+                     <iframe width="420" height="315" src="http://www.youtube.com/embed/bcjSe0xCHbE" frameborder="0" allowfullscreen></iframe>
             </section>
             <section id="avoid-map-reduce">
                      <h2>Avoid MapReduce</h2>
@@ -65,6 +63,12 @@
                         
                         </ul>
             </section>
+            <aside class="notes" data-markdown>
+              <p>
+	      - Don't focus on MapReduce. 
+              - It is difficult and requires building a pair of Java classes.  Most users with big data will be better served by using applications on top of Hadoop. Think of this as writing your own program, vs. using an exsiting one (C-Code vs. R).
+              </p>
+            </aside>
             <section id="alternatives">
                      <h2>Alternatives to MapReduce</h2>
                         <ul>
@@ -109,6 +113,8 @@ $ hdfs dfs -help ls
             </section>
             <section id="hdfs-practice1">
 	        <section id="hdfs-practice1-q">
+                        <h2>HDFS Practice</h2>
+                        <br />
                         <p>Create a directory in HDFS called <code>arcdata</code> and check its contents.</p>
                 </section>
                 <section id="hdfs-practice1-ans">
@@ -130,6 +136,13 @@ $ hdfs dfs -get hdfsfile  localdirectory/
 $ hdfs dfs -distcp file:///scratch/my/files hdfs:///user/my/files
 		  </code></pre>
            </section>
+           <section id="hadoop-examples">
+                   <h2>Hadoop Examples</h2>
+                   <ul>
+                           <li>NGrams schema: word ,year, occurrences, volumes</li>
+                           <li>Task: Find number of words per year that occur in only one volume</li>
+                   </ul>
+           </section>
            <section id="hive">
                    <h2>Hive</h2>
                    <pre><code>
@@ -138,9 +151,13 @@ $ hive
 $
 $ > # Now in interactive Hive console
 $ >
-$ > CREATE TABLE data (...) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
-$ > LOAD DATA INPATH 'data.csv' OVERWRITE INTO TABLE data;
-$ > SELECT ... WHERE ... FROM data GROUP BY ... ORDER BY ...;
+$ > CREATE TABLE ngrams (ngram STRING, year INT, matches BIGINT,
+$ >     volumes BIGINT) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
+$ >
+$ > LOAD DATA INPATH 'ngrams.data' OVERWRITE INTO TABLE ngrams;
+$ >
+$ > SELECT COUNT(ngram),year FROM ngrams WHERE volumes = 1
+$ >     GROUP BY year ORDER BY year;
                    </code></pre>
                    <br />
                    <p>Hive supports most of the SQL standard needed on a daily basis.</p>
@@ -151,10 +168,13 @@ $ > SELECT ... WHERE ... FROM data GROUP BY ... ORDER BY ...;
 $ hdfs dfs -put data.csv data.csv
 $ spark-shell --master yarn-client
 $
-$ > # Now in interactive Spark console (Scala)
-$ > val data = sc.textFile('data.csv')
-$ > val data_columns = data.map(line => line.split(','))
-$ > val answer = data_columns.reduceByKey((a, b) => a + b)
+# Now in interactive Spark console (Scala)
+$ > val ngrams = sc.textFile("ngrams.data")
+$ > val columns = ngrams.map(line => line.split("\t"))
+$ > val filtered = columns.filter(arr => arr(3).toInt == 1)
+$ > val reducable = filtered.map(arr => (arr(1), 1))
+$ > val answer = reducable.reduceByKey((a, b) => a + b)
+$ > answer.first()
                    </code></pre>
                    <br />
                    <p>Spark supports applying transformations to entire datasets (called Resilient Distributed Datasets). This functional programming model allows complicated transformations to be expressed simply.</p>
