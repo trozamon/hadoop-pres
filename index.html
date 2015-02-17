@@ -142,11 +142,15 @@ $ hdfs dfs -distcp file:///scratch/my/files hdfs:///user/my/files
                            <li>NGrams schema: word ,year, occurrences, volumes</li>
                            <li>Task: Find number of words per year that occur in only one volume</li>
                    </ul>
+                   <br />
+                   <p>Put in the data</p>
+                   <pre><code>
+$ hdfs dfs -put ngrams.data ngrams.data
+                   </code></pre>
            </section>
            <section id="hive">
                    <h2>Hive</h2>
                    <pre><code>
-$ hdfs dfs -put data.csv data.csv
 $ hive
 $
 $ > # Now in interactive Hive console
@@ -165,10 +169,10 @@ $ >     GROUP BY year ORDER BY year;
            <section id="spark">
                    <h2>Spark</h2>
                    <pre><code>
-$ hdfs dfs -put data.csv data.csv
 $ spark-shell --master yarn-client
 $
 # Now in interactive Spark console (Scala)
+# The Python API is virtually identical
 $ > val ngrams = sc.textFile("ngrams.data")
 $ > val columns = ngrams.map(line => line.split("\t"))
 $ > val filtered = columns.filter(arr => arr(3).toInt == 1)
@@ -182,16 +186,19 @@ $ > answer.first()
            <section id="pig">
                    <h2>Pig</h2>
                    <pre><code>
-$ hdfs dfs -put data.csv data.csv
 $ pig
 $
 $ > # Now in interactive Pig console
-$ > data = LOAD 'data.csv' AS (name:chararray, ...);
-$ > data_grouped = GROUP data BY name;
-$ > answer = FOREACH data_grouped GENERATE SUM(...);
+$ > data = LOAD 'warehouse/ngrams/data' AS (ngram:chararray, year:int,
+$ >     matches:long, volumes:long);
+$ > filtered = FILTER data BY volumes == 1;
+$ > grouped = GROUP filtered BY year;
+$ > answer = FOREACH grouped GENERATE group, SUM($1.volumes);
+$ > ordered = ORDER answer BY $0 ASC;
+$ > DUMP ordered;
                    </code></pre>
                    <br />
-                   <p>Pig is similar but more in-depth than SQL. Any complex transformations that can't be done in SQL probably can be expressed in Pig.</p>
+                   <p>Pig is similar to but more in-depth than SQL. Any complex transformations that can't be done in SQL probably can be expressed in Pig.</p>
            </section>
            <section id="python">
                    <h2>Python</h2>
