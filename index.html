@@ -44,7 +44,7 @@
                      <br />
                      <br />
                      <h3>What is Fladoop?</h3>
-                     <p>Fladoop is the name of the Flux Hadoop cluster, just as Flux is the name of the general HPC cluster.</p>
+                     <p>Fladoop is the name of the ARC-TS Hadoop cluster, just as Flux is the name of the ARC-TS HPC cluster.</p>
             </section>
             <section id="links">
                      <h1>Links / Guides</h1>
@@ -151,9 +151,25 @@ $ hdfs dfs -put ngrams.data ngrams.data
                    </code></pre>
            </section>
            <section id="hive">
+                   <section id="hive-intro">
                    <h2>Hive</h2>
+                   <ul>
+                           <li>Supports most of SQL</li>
+                           <li>Fastest from idea to result</li>
+                   </ul>
+                   <br />
+                   <br />
+                   <p>Go down for:</p>
+                   <br />
+                   <ol>
+                           <li>Creating a Table</li>
+                           <li>Running queries</li>
+                           <li>Results</li>
+                   </ol>
+                   </section>
+                   <section id="hive-create-table">
                    <pre><code>
-$ hive
+$ hive --hiveconf mapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE
 $
 $ > # Now in interactive Hive console
 $ >
@@ -161,34 +177,99 @@ $ > CREATE TABLE ngrams (ngram STRING, year INT, matches BIGINT,
 $ >     volumes BIGINT) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
 $ >
 $ > LOAD DATA INPATH 'ngrams.data' OVERWRITE INTO TABLE ngrams;
-$ >
-$ > SELECT COUNT(ngram),year FROM ngrams WHERE volumes = 1
+$ > QUIT;
+                   </code></pre>
+                   </section>
+                   <section id="hive-simple">
+                   <pre><code>
+$ hive --hiveconf mapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE
+$
+$ > SELECT year,COUNT(ngram) FROM ngrams WHERE volumes = 1
 $ >     GROUP BY year ORDER BY year;
                    </code></pre>
-                   <br />
-                   <p>Hive supports most of the SQL standard needed on a daily basis.</p>
+                   </section>
+                   <section id="hive-results">
+                           <!-- TODO -->
+                   </section>
            </section>
-           <section id="spark">
-                   <h2>Spark</h2>
-                   <pre><code>
-$ spark-shell --master yarn-client
-$
-# Now in interactive Spark console (Scala)
-# The Python API is virtually identical
-$ > val ngrams = sc.textFile("ngrams.data")
-$ > val columns = ngrams.map(line => line.split("\t"))
-$ > val filtered = columns.filter(arr => arr(3).toInt == 1)
-$ > val reducable = filtered.map(arr => (arr(1), 1))
-$ > val answer = reducable.reduceByKey((a, b) => a + b)
-$ > answer.first()
-                   </code></pre>
-                   <br />
-                   <p>Spark supports applying transformations to entire datasets (called Resilient Distributed Datasets). This functional programming model allows complicated transformations to be expressed simply.</p>
+           <section id="python">
+                   <section id="python-intro">
+                           <h2>Hadoop Streaming: Python</h2>
+                           <ul>
+                                   <li>Map and reduce in Python</li>
+                                   <li>Code reads from STDIN and writes to STDOUT</li>
+                           </ul>
+                           <br />
+                           <br />
+                           <p>Go down for:</p>
+                           <br />
+                           <ol>
+                                   <li>mapper.py</li>
+                                   <li>reducer.py</li>
+                                   <li>Submitting a Python job</li>
+                                   <li>Results</li>
+                           </ol>
+                   </section>
+                   <section id="python-mapper">
+                           <h2>Mapper</h2>
+                           <br />
+                           <pre><code class="python">
+#!/usr/bin/env python3.3
+
+for line in fileinput.input():
+    split = line.split("\t")
+    if int(split[3]) == 1:
+        print('\t'.join([split[1], '1']))
+                           </code></pre>
+                           <br />
+                           <br />
+                           <ol>
+                                   <li>Iterate over STDIN with fileinput.</li>
+                                   <li>Split each line.</li>
+                                   <li>Check if the ngram is only in one volume.</li>
+                                   <li>If so, print out the year and a '1' as a tab-separated key-value pair.</li>
+                           </ol>
+                   </section>
+                   <section id="python-reducer">
+                           <h2>Reducer</h2>
+                           <br />
+                           <pre><code class="python">
+#!/usr/bin/env python3.3
+
+year_count = dict()
+for line in fileinput.input():
+    tmp = line.split('\t')
+    if tmp[0] not in year_count.keys():
+        year_count[tmp[0]] = 0
+    year_count[tmp[0]] = year_count[tmp[0]] + 1
+for year in sorted(year_count.keys()):
+    print('\t'.join([year, year_count[year]]))
+                           </code></pre>
+                           <br />
+                           <br />
+                           <ol>
+                                   <li>Sum the amount of ngrams that only appear in one volume by year</li>
+                                   <li>Print the sorted result</li>
+                           </ol>
+                   </section>
+                   <section id="python-running">
+                           <h2>Sumbitting Python</h2>
+                           <br />
+                           <pre><code>
+yarn jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+    -Dmapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE \
+    -input input -output output -mapper mapper.py \
+    -reducer reducer.py -file mapper.py -file reducer.py
+                           </code></pre>
+                   </section>
+                   <section id="python-results">
+                           <!-- TODO -->
+                   </section>
            </section>
            <section id="pig">
                    <h2>Pig</h2>
                    <pre><code>
-$ pig
+$ pig -Dmapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE
 $
 $ > # Now in interactive Pig console
 $ > data = LOAD 'warehouse/ngrams/data' AS (ngram:chararray, year:int,
@@ -202,27 +283,22 @@ $ > DUMP ordered;
                    <br />
                    <p>Pig is similar to but more in-depth than SQL. Any complex transformations that can't be done in SQL probably can be expressed in Pig.</p>
            </section>
-           <section id="python">
-                   <h2>Hadoop Streaming: Python</h2>
-                   <pre><code class="python">
-# mapper.py
-for line in fileinput.input():
-    split = line.split("\t")
-    if int(split[3]) == 1:
-        print('\t'.join([split[1], '1']))
-
-# reducer.py
-year_count = dict()
-for line in fileinput.input():
-    tmp = line.split('\t')
-    if tmp[0] not in year_count.keys():
-        year_count[tmp[0]] = 0
-    year_count[tmp[0]] = year_count[tmp[0]] + 1
-for year in sorted(year_count.keys()):
-    print('\t'.join([year, year_count[year]]))
+           <section id="spark">
+                   <h2>Spark</h2>
+                   <pre><code>
+$ spark-shell --master yarn-client --queue HADOOP_PRES_TRAINING_QUEUE
+$
+# Now in interactive Spark console (Scala)
+# The Python API is virtually identical
+$ > val ngrams = sc.textFile("ngrams.data")
+$ > val columns = ngrams.map(line => line.split("\t"))
+$ > val filtered = columns.filter(arr => arr(3).toInt == 1)
+$ > val reducable = filtered.map(arr => (arr(1), 1))
+$ > val answer = reducable.reduceByKey((a, b) => a + b)
+$ > answer.first()
                    </code></pre>
                    <br />
-                   <p>Python can be run on the cluster by writing a mapper and reducer that both read from STDIN and write key-value pairs to STDOUT.</p>
+                   <p>Spark supports applying transformations to entire datasets (called Resilient Distributed Datasets). This functional programming model allows complicated transformations to be expressed simply.</p>
            </section>
            <section id="choosing">
                    <h2>Choosing a tool and language</h2>
