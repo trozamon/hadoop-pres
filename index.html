@@ -192,6 +192,59 @@ $ >     GROUP BY year ORDER BY year;
                            <!-- TODO -->
                    </section>
            </section>
+           <section id="pig">
+                   <section id="pig-intro">
+                   <h2>Pig</h2>
+                   <br />
+                   <ul>
+                           <li>Similar to but more in-depth than SQL</li>
+                           <li>Supports complex transformations that can't be cleanly done in SQL</li>
+                   </ul>
+                   <br />
+                   <br />
+                   <p>Go down for:</p>
+                   <br />
+                   <ol>
+                           <li>Running interactive jobs</li>
+                           <li>Running scripts</li>
+                           <li>Results</li>
+                   </ol>
+                   </section>
+                   <section id="pig-interactive">
+                   <pre><code>
+$ pig -Dmapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE
+$
+$ > # Now in interactive Pig console
+$ > data = LOAD 'warehouse/ngrams/data' AS (ngram:chararray, year:int,
+$ >     matches:long, volumes:long);
+$ > filtered = FILTER data BY volumes == 1;
+$ > grouped = GROUP filtered BY year;
+$ > answer = FOREACH grouped GENERATE group, SUM($1.volumes);
+$ > ordered = ORDER answer BY $0 ASC;
+$ > DUMP ordered;
+                   </code></pre>
+                   </section>
+                   <section id="pig-file">
+                   <pre><code>
+# query.pig
+data = LOAD 'warehouse/ngrams/data' AS (ngram:chararray, year:int,
+    matches:long, volumes:long);
+filtered = FILTER data BY volumes == 1;
+grouped = GROUP filtered BY year;
+answer = FOREACH grouped GENERATE group, SUM($1.volumes);
+ordered = ORDER answer BY $0 ASC;
+DUMP ordered;
+                   </code></pre>
+                   <br />
+                   <p>The 'query.pig' file can be run with the command below:</p>
+                   <br />
+                   <pre><code>
+pig -Dmapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE -f query.pig
+                   </code></pre>
+                   </section>
+                   <section id="pig-results">
+                   </section>
+           </section>
            <section id="python">
                    <section id="python-intro">
                            <h2>Hadoop Streaming: Python</h2>
@@ -265,23 +318,6 @@ yarn jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
                    <section id="python-results">
                            <!-- TODO -->
                    </section>
-           </section>
-           <section id="pig">
-                   <h2>Pig</h2>
-                   <pre><code>
-$ pig -Dmapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE
-$
-$ > # Now in interactive Pig console
-$ > data = LOAD 'warehouse/ngrams/data' AS (ngram:chararray, year:int,
-$ >     matches:long, volumes:long);
-$ > filtered = FILTER data BY volumes == 1;
-$ > grouped = GROUP filtered BY year;
-$ > answer = FOREACH grouped GENERATE group, SUM($1.volumes);
-$ > ordered = ORDER answer BY $0 ASC;
-$ > DUMP ordered;
-                   </code></pre>
-                   <br />
-                   <p>Pig is similar to but more in-depth than SQL. Any complex transformations that can't be done in SQL probably can be expressed in Pig.</p>
            </section>
            <section id="spark">
                    <h2>Spark</h2>
