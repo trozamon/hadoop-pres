@@ -234,7 +234,11 @@ $ > DUMP ordered;
                    <p>The 'ngrams.pig' file can be run with the command below:</p>
                    <br />
                    <pre><code>
-pig -Dmapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE -f query.pig
+$ cd hadoop-pres
+$ pig -Dmapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE -f ngrams.pig
+$
+$ # Running locally
+$ pig -x local -f ngrams.pig
                    </code></pre>
                    </section>
                    <section id="pig-results">
@@ -308,10 +312,14 @@ for year in sorted(year_count.keys()):
                            <h2>Sumbitting Python</h2>
                            <br />
                            <pre><code>
-yarn jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
-    -Dmapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE \
-    -input input -output output -mapper mapper.py \
-    -reducer reducer.py -file mapper.py -file reducer.py
+$ yarn jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+$     -Dmapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE \
+$     -input input -output output -mapper mapper.py \
+$     -reducer reducer.py -file mapper.py -file reducer.py
+                           </code></pre>
+                           <br />
+                           <pre><code>
+$ cat ngrams.data | python3 mapper.py | python3 reducer.py
                            </code></pre>
                    </section>
                    <section id="python-results">
