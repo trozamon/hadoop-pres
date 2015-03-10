@@ -220,28 +220,18 @@ snaketail 10
 $ pig -Dmapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE
 $
 $ > # Now in interactive Pig console
-$ > data = LOAD 'warehouse/ngrams/data' AS (ngram:chararray, year:int,
-$ >     matches:long, volumes:long);
+$ > data = LOAD 'ngrams.data' AS (ngram:chararray, year:int, matches:long,
+$ >     volumes:long);
 $ > filtered = FILTER data BY volumes == 1;
-$ > grouped = GROUP filtered BY year;
+$ > grouped = GROUP filtered BY ngram;
 $ > answer = FOREACH grouped GENERATE group, SUM($1.volumes);
 $ > ordered = ORDER answer BY $0 ASC;
 $ > DUMP ordered;
                    </code></pre>
                    </section>
                    <section id="pig-file">
-                   <pre><code>
-# query.pig
-data = LOAD 'warehouse/ngrams/data' AS (ngram:chararray, year:int,
-    matches:long, volumes:long);
-filtered = FILTER data BY volumes == 1;
-grouped = GROUP filtered BY year;
-answer = FOREACH grouped GENERATE group, SUM($1.volumes);
-ordered = ORDER answer BY $0 ASC;
-DUMP ordered;
-                   </code></pre>
                    <br />
-                   <p>The 'query.pig' file can be run with the command below:</p>
+                   <p>The 'ngrams.pig' file can be run with the command below:</p>
                    <br />
                    <pre><code>
 pig -Dmapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE -f query.pig
