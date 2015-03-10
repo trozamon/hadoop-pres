@@ -144,10 +144,10 @@ $ hdfs dfs -distcp file:///scratch/my/files hdfs:///user/my/files
                    </ul>
                    <br />
                    <br />
-                   <br />
                    <p>Put in the data</p>
                    <pre><code>
-$ hdfs dfs -put ngrams.data ngrams.data
+$ git clone git://github.com/trozamon/hadoop-pres.git
+$ hdfs dfs -put hadoop-pres/ngrams.data ngrams.data
                    </code></pre>
            </section>
            <section id="hive">
@@ -166,6 +166,9 @@ $ hdfs dfs -put ngrams.data ngrams.data
                            <li>Running queries</li>
                            <li>Results</li>
                    </ol>
+                   <br />
+                   <br />
+                   <p>Note: The below code is in hadoop-pres/ngrams.sql</p>
                    </section>
                    <section id="hive-create-table">
                    <pre><code>
@@ -184,12 +187,14 @@ $ > QUIT;
                    <pre><code>
 $ hive --hiveconf mapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE
 $
-$ > SELECT year,COUNT(ngram) FROM ngrams WHERE volumes = 1
-$ >     GROUP BY year ORDER BY year;
+$ > SELECT ngram, COUNT(ngram) FROM ngrams WHERE volumes = 1 GROUP BY ngram;
                    </code></pre>
                    </section>
                    <section id="hive-results">
-                           <!-- TODO -->
+                       <pre><code>
+snake 22
+snaketail 10
+                       </code></pre>
                    </section>
            </section>
            <section id="pig">
