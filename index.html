@@ -292,6 +292,8 @@ for line in fileinput.input():
                            <pre><code class="python">
 #!/usr/bin/env python3.3
 
+import fileinput
+
 year_count = dict()
 for line in fileinput.input():
     tmp = line.split('\t')
@@ -299,9 +301,11 @@ for line in fileinput.input():
         year_count[tmp[0]] = 0
     year_count[tmp[0]] = year_count[tmp[0]] + 1
 for year in sorted(year_count.keys()):
-    print('\t'.join([year, year_count[year]]))
+    print('\t'.join([year, str(year_count[year])]))
                            </code></pre>
-                           <br />
+                   </section>
+                   <section id="python-reducer-explain">
+                           <h2>Reducer Continued</h2>
                            <br />
                            <ol>
                                    <li>Sum the amount of ngrams that only appear in one volume by year</li>
@@ -323,7 +327,10 @@ $ cat ngrams.data | python3 mapper.py | python3 reducer.py
                            </code></pre>
                    </section>
                    <section id="python-results">
-                           <!-- TODO -->
+                       <pre><code>
+snake   22
+snaketail       10
+                       </code></pre>
                    </section>
            </section>
            <section id="spark">
