@@ -1,34 +1,36 @@
 
 <!doctype html>
 <html lang="en">	
-<head>
-<!-- taken from tutorial http://htmlcheats.com/reveal-js/reveal-js-tutorial-reveal-js-for-beginners/ -->
-    <meta charset="utf-8">
-    <title>Big Data with Hadoop/Spark</title>
-    <link rel="stylesheet" href="css/reveal.min.css">
-    <link rel="stylesheet" href="css/theme/default.css" id="theme">    
+    <head>
+        <!-- taken from tutorial http://htmlcheats.com/reveal-js/reveal-js-tutorial-reveal-js-for-beginners/ -->
+        <meta charset="utf-8">
+        <title>Big Data with Hadoop/Spark</title>
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <link rel="stylesheet" href="css/theme/default.css" id="theme">    
 
-    <!-- Syntax Highlighting -->
-    <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- Syntax Highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
 
-    <!--Add support for earlier versions of Internet Explorer -->
-    <!--[if lt IE 9]>
-    <script src="lib/js/html5shiv.js"></script>
-    <![endif]-->
-</head>
-<body>
-    <!-- Wrap the entire slide show in a div using the "reveal" class. -->
-    <div class="reveal">
-    <div id="arc-logo" style="background: url(images/arc-logo.png);
-                        background-size: 516px 74px;
-                        position: absolute;
-                        bottom: 30px;
-                        left: 50px;
-                        width: 516px;
-                        height: 74px;"></div>
-        <!-- Wrap all slides in a single "slides" class -->
-        <div class="slides">
-            <section id="title">
+        <!--Add support for earlier versions of Internet Explorer -->
+        <!--[if lt IE 9]>
+            <script src="lib/js/html5shiv.js"></script>
+            <![endif]-->
+    </head>
+
+    <body>
+        <!-- Wrap the entire slide show in a div using the "reveal" class. -->
+        <div class="reveal">
+            <div id="arc-logo" style="background: url(images/arc-logo.png);
+            background-size: 516px 74px;
+            position: absolute;
+            bottom: 30px;
+            left: 50px;
+            width: 516px;
+            height: 74px;"></div>
+            <!-- Wrap all slides in a single "slides" class -->
+            <div class="slides">
+
+                <section id="title">
                     <h1>Big Data with Hadoop and Spark</h1>
                     <br />
                     <p>Brock Palen</p>
@@ -36,67 +38,74 @@
                     <br />
                     <p>Alec Ten Harmsel</p>
                     <p>talec@umich.edu</p>
-            </section>
-            <section id="what-is-hadoop">
-                     <h2>What is Hadoop?</h2>
-                     <p>The Apache Hadoop software library is a <strong class="fragment highlight-green">framework</strong> that allows for the <strong class="fragment highlight-green">distributed processing</strong> of large data sets across clusters of computers using simple programming models. It is designed to scale up from single servers to thousands of machines, each offering local computation and storage.</p>
-                     <br />
-                     <br />
-                     <br />
-                     <h3>What is Fladoop?</h3>
-                     <p>Fladoop is the name of the ARC-TS Hadoop cluster, just as Flux is the name of the ARC-TS HPC cluster.</p>
-            </section>
-            <section id="links">
-                     <h1>Links / Guides</h1>
-                     <a href="http://caen.github.io/hadoop">ARC Fladoop Documentation</a><br />
-                     <a href="http://fluxhpc.blogspot.com/2014/09/arc-fladoop-data-platform-hadoop.html">Hardware - Fladoop Architecture</a><br />
-                     <a href="https://www.udacity.com/course/ud617">Free UDACITY Hadoop/MapReduce Course Materials</a><br />
-                     <iframe width="420" height="315" src="http://www.youtube.com/embed/bcjSe0xCHbE" frameborder="0" allowfullscreen></iframe>
-            </section>
-            <section id="avoid-map-reduce">
-                     <h2>Avoid MapReduce</h2>
-                        <ul>
-                        
-                        	<li>Lowest level way to control Hadoop</li>
-                        	<li>Most difficult to work with</li>
-                        	<li>Java - Take it as you will</li>
-                        
-                        </ul>
-            </section>
-            <aside class="notes" data-markdown>
-              <p>
-	      - Don't focus on MapReduce. 
-              - It is difficult and requires building a pair of Java classes.  Most users with big data will be better served by using applications on top of Hadoop. Think of this as writing your own program, vs. using an exsiting one (C-Code vs. R).
-              </p>
-            </aside>
-            <section id="alternatives">
-                     <h2>Alternatives to MapReduce</h2>
-                        <ul>
-                        	<li><a href="http://hive.apache.org/">HIVE - Data Warehouse SQL Like</a></li>
-                        	<li><a href="http://pig.apache.org/">Pig - Platform for analyzing large data sets</a></li>
-                        	<li><a href="http://spark.apache.org/">Spark - A fast and general compute engine for Hadoop data, Graph Data, and Machine Learning</a></li>
-                        	<li><a href="http://mahout.apache.org/">Mahout - A Scalable machine learning and data mining library</a></li>
-                        </ul>
-			<p>More on these later</p>
+                </section>
 
-            </section>
-            <section id="hdfs">
-                     <h2>The Hadoop File System (HDFS)</h2>
-                     <!-- TODO Fix this image - has fladdop instead of fladoop -->
-                     <img src="images/fladoop20.jpg">
-            </section>
-            <section id="hdfs-about">
+                <section id="what-is-hadoop">
+                    <h2>What is Hadoop?</h2>
+                    <p>The Apache Hadoop software library is a <strong class="fragment highlight-green">framework</strong> that allows for the <strong class="fragment highlight-green">distributed processing</strong> of large data sets across clusters of computers using simple programming models. It is designed to scale up from single servers to thousands of machines, each offering local computation and storage.</p>
+                    <br />
+                    <br />
+                    <br />
+                    <h3>What is Fladoop?</h3>
+                    <p>Fladoop is the name of the ARC-TS Hadoop cluster, just as Flux is the name of the ARC-TS HPC cluster.</p>
+                </section>
+
+                <section id="links">
+                    <h1>Links / Guides</h1>
+                    <a href="http://caen.github.io/hadoop">ARC Fladoop Documentation</a><br />
+                    <a href="http://fluxhpc.blogspot.com/2014/09/arc-fladoop-data-platform-hadoop.html">Hardware - Fladoop Architecture</a><br />
+                    <a href="https://www.udacity.com/course/ud617">Free UDACITY Hadoop/MapReduce Course Materials</a><br />
+                    <iframe width="420" height="315" src="http://www.youtube.com/embed/bcjSe0xCHbE" frameborder="0" allowfullscreen></iframe>
+                </section>
+
+                <section id="avoid-map-reduce">
+                    <h2>Avoid MapReduce</h2>
+                    <ul>
+
+                        <li>Lowest level way to control Hadoop</li>
+                        <li>Most difficult to work with</li>
+                        <li>Java - Take it as you will</li>
+
+                    </ul>
+                </section>
+
+                <aside class="notes" data-markdown>
+                    <p>
+                    - Don't focus on MapReduce. 
+                    - It is difficult and requires building a pair of Java classes.  Most users with big data will be better served by using applications on top of Hadoop. Think of this as writing your own program, vs. using an exsiting one (C-Code vs. R).
+                    </p>
+                </aside>
+
+                <section id="alternatives">
+                    <h2>Alternatives to MapReduce</h2>
+                    <ul>
+                        <li><a href="http://hive.apache.org/">Hive - Data Warehouse - SQL Like</a></li>
+                        <li><a href="http://pig.apache.org/">Pig - Platform for analyzing large data sets</a></li>
+                        <li><a href="http://spark.apache.org/">Spark - A fast and general compute engine for Hadoop data, Graph Data, and Machine Learning</a></li>
+                        <li><a href="http://mahout.apache.org/">Mahout - A Scalable machine learning and data mining library</a></li>
+                    </ul>
+                    <p>More on these later</p>
+                </section>
+
+                <section id="hdfs">
+                    <h2>The Hadoop File System (HDFS)</h2>
+                    <!-- TODO Fix this image - has fladdop instead of fladoop -->
+                    <img src="images/fladoop20.jpg">
+                </section>
+
+                <section id="hdfs-about">
                     <h2>About HDFS</h2>
-               <ul>
-               	<li>Distributed and fault tolerant</li>
-               	<li>Can’t use typical tools(cp, mv, mkdir)</li>
-                <li>Hadoop has HDFS-specific implementations of common tools</li>
-               	<li>Looks like POSIX filesystems</li>
-               </ul>
-            </section>
-            <section id="dfs">
-                     <h2>Common HDFS Commands</h2>
-                        <pre><code data-trim>
+                    <ul>
+                        <li>Distributed and fault tolerant</li>
+                        <li>Can’t use typical tools(cp, mv, mkdir)</li>
+                        <li>Hadoop has HDFS-specific implementations of common tools</li>
+                        <li>Looks like POSIX filesystems</li>
+                    </ul>
+                </section>
+
+                <section id="dfs">
+                    <h2>Common HDFS Commands</h2>
+                    <pre><code data-trim>
 # List files HDFS home directory
 $ hdfs dfs -ls
 $ hdfs dfs -ls /user/brockp
@@ -109,69 +118,75 @@ $ hdfs dfs -help
 
 # Get help with single HDFS option, leave off the -
 $ hdfs dfs -help ls
-                        </code></pre>
-            </section>
-            <section id="hdfs-practice1">
-	        <section id="hdfs-practice1-q">
+                    </code></pre>
+                </section>
+
+                <section id="hdfs-practice1">
+                    <section id="hdfs-practice1-q">
                         <h2>HDFS Practice</h2>
                         <br />
                         <p>Create a directory in HDFS called <code>arcdata</code> and check its contents.</p>
-                </section>
-                <section id="hdfs-practice1-ans">
-                    <pre><code>
+                    </section>
+                    <section id="hdfs-practice1-ans">
+                        <pre><code>
 $ hdfs dfs -mkdir arcdata
 $ hdfs dfs -ls arcdata
-                    </code></pre>
+                        </code></pre>
+                    </section>
                 </section>
-            </section>
-            <section id="hdfs-get-put">
-		  <h2>Moving to and from HDFS</h2>
-		  <h3>get / put / distcp</h3>
-		  <pre><code>
+
+                <section id="hdfs-get-put">
+                    <h2>Moving to and from HDFS</h2>
+                    <h3>get / put / distcp</h3>
+                    <pre><code>
 $ hdfs dfs -put localfile hdfsdirectory/
 $ hdfs dfs -get hdfsfile  localdirectory/
 
 # distcp is handy for very large files
 # but requires a shared filesystem (/scratch)
 $ hdfs dfs -distcp file:///scratch/my/files hdfs:///user/my/files
-		  </code></pre>
-           </section>
-           <section id="hadoop-examples">
-                   <h2>Hadoop Examples</h2>
-                   <ul>
-                           <li>NGrams schema: word ,year, occurrences, volumes</li>
-                           <li>Task: Find number of words per year that occur in only one volume</li>
-                   </ul>
-                   <br />
-                   <br />
-                   <p>Put in the data</p>
-                   <pre><code>
+                    </code></pre>
+                </section>
+
+                <section id="hadoop-examples">
+                    <h2>Hadoop Examples</h2>
+                    <ul>
+                        <li>NGrams schema: word ,year, occurrences, volumes</li>
+                        <li>Task: Find number of words per year that occur in only one volume</li>
+                    </ul>
+                    <br />
+                    <br />
+                    <p>Put in the data</p>
+                    <pre><code>
 $ git clone git://github.com/trozamon/hadoop-pres.git
 $ hdfs dfs -put hadoop-pres/ngrams.data ngrams.data
-                   </code></pre>
-           </section>
-           <section id="hive">
-                   <section id="hive-intro">
-                   <h2>Hive</h2>
-                   <ul>
-                           <li>Supports most of SQL</li>
-                           <li>Fastest from idea to result</li>
-                   </ul>
-                   <br />
-                   <br />
-                   <p>Go down for:</p>
-                   <br />
-                   <ol>
-                           <li>Creating a Table</li>
-                           <li>Running queries</li>
-                           <li>Results</li>
-                   </ol>
-                   <br />
-                   <br />
-                   <p>Note: The below code is in hadoop-pres/ngrams.sql</p>
-                   </section>
-                   <section id="hive-create-table">
-                   <pre><code>
+                    </code></pre>
+                </section>
+
+                <section id="hive">
+
+                    <section id="hive-intro">
+                        <h2>Hive</h2>
+                        <ul>
+                            <li>Supports most of SQL</li>
+                            <li>Fastest from idea to result</li>
+                        </ul>
+                        <br />
+                        <br />
+                        <p>Go down for:</p>
+                        <br />
+                        <ol>
+                            <li>Creating a Table</li>
+                            <li>Running queries</li>
+                            <li>Results</li>
+                        </ol>
+                        <br />
+                        <br />
+                        <p>Note: The below code is in hadoop-pres/ngrams.sql</p>
+                    </section>
+
+                    <section id="hive-create-table">
+                        <pre><code>
 $ hive --hiveconf mapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE
 $
 $ > # Now in interactive Hive console
@@ -181,42 +196,48 @@ $ >     volumes BIGINT) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
 $ >
 $ > LOAD DATA INPATH 'ngrams.data' OVERWRITE INTO TABLE ngrams;
 $ > QUIT;
-                   </code></pre>
-                   </section>
-                   <section id="hive-simple">
-                   <pre><code>
+                        </code></pre>
+                    </section>
+
+                    <section id="hive-simple">
+                        <pre><code>
 $ hive --hiveconf mapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE
 $
 $ > SELECT ngram, COUNT(ngram) FROM ngrams WHERE volumes = 1 GROUP BY ngram;
-                   </code></pre>
-                   </section>
-                   <section id="hive-results">
-                       <pre><code>
+                        </code></pre>
+                    </section>
+
+                    <section id="hive-results">
+                        <pre><code>
 snake 22
 snaketail 10
-                       </code></pre>
-                   </section>
-           </section>
-           <section id="pig">
-                   <section id="pig-intro">
-                   <h2>Pig</h2>
-                   <br />
-                   <ul>
-                           <li>Similar to but more in-depth than SQL</li>
-                           <li>Supports complex transformations that can't be cleanly done in SQL</li>
-                   </ul>
-                   <br />
-                   <br />
-                   <p>Go down for:</p>
-                   <br />
-                   <ol>
-                           <li>Running interactive jobs</li>
-                           <li>Running scripts</li>
-                           <li>Results</li>
-                   </ol>
-                   </section>
-                   <section id="pig-interactive">
-                   <pre><code>
+                        </code></pre>
+                    </section>
+
+                </section>
+
+                <section id="pig">
+
+                    <section id="pig-intro">
+                        <h2>Pig</h2>
+                        <br />
+                        <ul>
+                            <li>Similar to but more in-depth than SQL</li>
+                            <li>Supports complex transformations that can't be cleanly done in SQL</li>
+                        </ul>
+                        <br />
+                        <br />
+                        <p>Go down for:</p>
+                        <br />
+                        <ol>
+                            <li>Running interactive jobs</li>
+                            <li>Running scripts</li>
+                            <li>Results</li>
+                        </ol>
+                    </section>
+
+                    <section id="pig-interactive">
+                        <pre><code>
 $ pig -Dmapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE
 $
 $ > # Now in interactive Pig console
@@ -227,69 +248,76 @@ $ > grouped = GROUP filtered BY ngram;
 $ > answer = FOREACH grouped GENERATE group, SUM($1.volumes);
 $ > ordered = ORDER answer BY $0 ASC;
 $ > DUMP ordered;
-                   </code></pre>
-                   </section>
-                   <section id="pig-file">
-                   <br />
-                   <p>The 'ngrams.pig' file can be run with the command below:</p>
-                   <br />
-                   <pre><code>
+                        </code></pre>
+                    </section>
+
+                    <section id="pig-file">
+                        <br />
+                        <p>The 'ngrams.pig' file can be run with the command below:</p>
+                        <br />
+                        <pre><code>
 $ cd hadoop-pres
 $ pig -Dmapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE -f ngrams.pig
 $
 $ # Running locally
 $ pig -x local -f ngrams.pig
-                   </code></pre>
-                   </section>
-                   <section id="pig-results">
-                       <pre><code>
+                        </code></pre>
+                    </section>
+
+                    <section id="pig-results">
+                        <pre><code>
                        (snake,22)
                        (snaketail,10)
-                       </code></pre>
-                   </section>
-           </section>
-           <section id="python">
-                   <section id="python-intro">
-                           <h2>Hadoop Streaming: Python</h2>
-                           <ul>
-                                   <li>Map and reduce in Python</li>
-                                   <li>Code reads from STDIN and writes to STDOUT</li>
-                           </ul>
-                           <br />
-                           <br />
-                           <p>Go down for:</p>
-                           <br />
-                           <ol>
-                                   <li>mapper.py</li>
-                                   <li>reducer.py</li>
-                                   <li>Submitting a Python job</li>
-                                   <li>Results</li>
-                           </ol>
-                   </section>
-                   <section id="python-mapper">
-                           <h2>Mapper</h2>
-                           <br />
-                           <pre><code class="python">
+                        </code></pre>
+                    </section>
+
+                </section>
+
+                <section id="python">
+
+                    <section id="python-intro">
+                        <h2>Hadoop Streaming: Python</h2>
+                        <ul>
+                            <li>Map and reduce in Python</li>
+                            <li>Code reads from STDIN and writes to STDOUT</li>
+                        </ul>
+                        <br />
+                        <br />
+                        <p>Go down for:</p>
+                        <br />
+                        <ol>
+                            <li>mapper.py</li>
+                            <li>reducer.py</li>
+                            <li>Submitting a Python job</li>
+                            <li>Results</li>
+                        </ol>
+                    </section>
+
+                    <section id="python-mapper">
+                        <h2>Mapper</h2>
+                        <br />
+                        <pre><code class="python">
 #!/usr/bin/env python3.3
 
 for line in fileinput.input():
     split = line.split("\t")
     if int(split[3]) == 1:
         print('\t'.join([split[1], '1']))
-                           </code></pre>
-                           <br />
-                           <br />
-                           <ol>
-                                   <li>Iterate over STDIN with fileinput.</li>
-                                   <li>Split each line.</li>
-                                   <li>Check if the ngram is only in one volume.</li>
-                                   <li>If so, print out the year and a '1' as a tab-separated key-value pair.</li>
-                           </ol>
-                   </section>
-                   <section id="python-reducer">
-                           <h2>Reducer</h2>
-                           <br />
-                           <pre><code class="python">
+                        </code></pre>
+                        <br />
+                        <br />
+                        <ol>
+                            <li>Iterate over STDIN with fileinput.</li>
+                            <li>Split each line.</li>
+                            <li>Check if the ngram is only in one volume.</li>
+                            <li>If so, print out the year and a '1' as a tab-separated key-value pair.</li>
+                        </ol>
+                    </section>
+
+                    <section id="python-reducer">
+                        <h2>Reducer</h2>
+                        <br />
+                        <pre><code class="python">
 #!/usr/bin/env python3.3
 
 import fileinput
@@ -302,40 +330,45 @@ for line in fileinput.input():
     year_count[tmp[0]] = year_count[tmp[0]] + 1
 for year in sorted(year_count.keys()):
     print('\t'.join([year, str(year_count[year])]))
-                           </code></pre>
-                   </section>
-                   <section id="python-reducer-explain">
-                           <h2>Reducer Continued</h2>
-                           <br />
-                           <ol>
-                                   <li>Sum the amount of ngrams that only appear in one volume by year</li>
-                                   <li>Print the sorted result</li>
-                           </ol>
-                   </section>
-                   <section id="python-running">
-                           <h2>Sumbitting Python</h2>
-                           <br />
-                           <pre><code>
+                        </code></pre>
+                    </section>
+
+                    <section id="python-reducer-explain">
+                        <h2>Reducer Continued</h2>
+                        <br />
+                        <ol>
+                            <li>Sum the amount of ngrams that only appear in one volume by year</li>
+                            <li>Print the sorted result</li>
+                        </ol>
+                    </section>
+
+                    <section id="python-running">
+                        <h2>Sumbitting Python</h2>
+                        <br />
+                        <pre><code>
 $ yarn jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
 $     -Dmapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE \
 $     -input input -output output -mapper mapper.py \
 $     -reducer reducer.py -file mapper.py -file reducer.py
-                           </code></pre>
-                           <br />
-                           <pre><code>
+                        </code></pre>
+                        <br />
+                        <pre><code>
 $ cat ngrams.data | python3 mapper.py | python3 reducer.py
-                           </code></pre>
-                   </section>
-                   <section id="python-results">
-                       <pre><code>
+                        </code></pre>
+                    </section>
+
+                    <section id="python-results">
+                        <pre><code>
 snake   22
 snaketail       10
-                       </code></pre>
-                   </section>
-           </section>
-           <section id="spark">
-                   <h2>Spark</h2>
-                   <pre><code>
+                        </code></pre>
+                    </section>
+
+                </section>
+
+                <section id="spark">
+                    <h2>Spark</h2>
+                    <pre><code>
 $ spark-shell --master yarn-client --queue HADOOP_PRES_TRAINING_QUEUE
 $
 # Now in interactive Spark console (Scala)
@@ -346,54 +379,56 @@ $ > val filtered = columns.filter(arr => arr(3).toInt == 1)
 $ > val reducable = filtered.map(arr => (arr(1), 1))
 $ > val answer = reducable.reduceByKey((a, b) => a + b)
 $ > answer.first()
-                   </code></pre>
-                   <br />
-                   <p>Spark supports applying transformations to entire datasets (called Resilient Distributed Datasets). This functional programming model allows complicated transformations to be expressed simply.</p>
-           </section>
-           <section id="choosing">
-                   <h2>Choosing a tool and language</h2>
-                   <br />
-                   <ul>
-                           <li>Working on structured data? Use Hive or Pig.</li>
-                           <li>Working on unstructured data? Use Python or Scala.</li>
-                           <li>Need extremely high performance? Use Java or Scala.</li>
-                   </ul>
-           </section>
+                    </code></pre>
+                    <br />
+                    <p>Spark supports applying transformations to entire datasets (called Resilient Distributed Datasets). This functional programming model allows complicated transformations to be expressed simply.</p>
+                </section>
+
+                <section id="choosing">
+                    <h2>Choosing a tool and language</h2>
+                    <br />
+                    <ul>
+                        <li>Working on structured data? Use Hive or Pig.</li>
+                        <li>Working on unstructured data? Use Python or Scala.</li>
+                        <li>Need extremely high performance? Use Java or Scala.</li>
+                    </ul>
+                </section>
+
+            </div>
         </div>
-    </div>
-    <script src="lib/js/head.min.js"></script>
-    <script src="js/reveal.min.js"></script>
- 
-    <script>
-        // Required, even if empty.
-        Reveal.initialize({
-	                  slideNumber: true,
-			  history: true,
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+
+        <script>
+// Required, even if empty.
+Reveal.initialize({
+    slideNumber: true,
+    history: true,
     dependencies: [
         // Cross-browser shim that fully implements classList - https://github.com/eligrey/classList.js/
-        { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
 
-        // Interpret Markdown in <section> elements
-        { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    // Interpret Markdown in <section> elements
+    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
         { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 
         // Syntax highlight for <code> elements
         { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
 
-        // Zoom in and out with Alt+click
-        { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+            // Zoom in and out with Alt+click
+            { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
 
-        // Speaker notes
-        { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+            // Speaker notes
+            { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
 
-        // Remote control your reveal.js presentation using a touch device
-        { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } },
+                // Remote control your reveal.js presentation using a touch device
+                { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } },
 
-        // MathJax
-        { src: 'plugin/math/math.js', async: true }
+                // MathJax
+                { src: 'plugin/math/math.js', async: true }
     ]
-        });
+});
 
-    </script>
-</body>
+        </script>
+    </body>
 </html>
