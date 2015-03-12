@@ -45,7 +45,6 @@
                     <p>The Apache Hadoop software library is a <strong class="fragment highlight-green">framework</strong> that allows for the <strong class="fragment highlight-green">distributed processing</strong> of large data sets across clusters of computers using simple programming models. It is designed to scale up from single servers to thousands of machines, each offering local computation and storage.</p>
                     <br />
                     <br />
-                    <br />
                     <h3>What is Fladoop?</h3>
                     <p>Fladoop is the name of the ARC-TS Hadoop cluster, just as Flux is the name of the ARC-TS HPC cluster.</p>
                 </section>
@@ -90,7 +89,7 @@
                 <section id="hdfs">
                     <h2>The Hadoop File System (HDFS)</h2>
                     <!-- TODO Fix this image - has fladdop instead of fladoop -->
-                    <img src="images/fladoop20.jpg">
+                    <img src="images/fladoop-hdfs.png">
                 </section>
 
                 <section id="hdfs-about">
@@ -187,7 +186,7 @@ $ hdfs dfs -put hadoop-pres/ngrams.data ngrams.data
 
                     <section id="hive-create-table">
                         <pre><code>
-$ hive --hiveconf mapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE
+$ hive --hiveconf mapreduce.job.queuename=training
 $
 $ > # Now in interactive Hive console
 $ >
@@ -201,9 +200,17 @@ $ > QUIT;
 
                     <section id="hive-simple">
                         <pre><code>
-$ hive --hiveconf mapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE
+$ hive --hiveconf mapreduce.job.queuename=training
 $
 $ > SELECT ngram, COUNT(ngram) FROM ngrams WHERE volumes = 1 GROUP BY ngram;
+                        </code></pre>
+                    </section>
+
+                    <section id="hive-run-file">
+                        <h2>Running SQL files</h2>
+                        <pre><code>
+$ hive --hiveconf mapreduce.job.queuename=training \
+$     -f ngrams.sql
                         </code></pre>
                     </section>
 
@@ -238,7 +245,7 @@ snaketail 10
 
                     <section id="pig-interactive">
                         <pre><code>
-$ pig -Dmapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE
+$ pig -Dmapreduce.job.queuename=training
 $
 $ > # Now in interactive Pig console
 $ > data = LOAD 'ngrams.data' AS (ngram:chararray, year:int, matches:long,
@@ -257,7 +264,7 @@ $ > DUMP ordered;
                         <br />
                         <pre><code>
 $ cd hadoop-pres
-$ pig -Dmapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE -f ngrams.pig
+$ pig -Dmapreduce.job.queuename=training -f ngrams.pig
 $
 $ # Running locally
 $ pig -x local -f ngrams.pig
@@ -304,7 +311,9 @@ for line in fileinput.input():
     if int(split[3]) == 1:
         print('\t'.join([split[1], '1']))
                         </code></pre>
-                        <br />
+                    </section>
+                    <section id="python-mapper-explain">
+                        <h2>Mapper Continued</h2>
                         <br />
                         <ol>
                             <li>Iterate over STDIN with fileinput.</li>
@@ -347,7 +356,7 @@ for year in sorted(year_count.keys()):
                         <br />
                         <pre><code>
 $ yarn jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
-$     -Dmapreduce.job.queuename=HADOOP_PRES_TRAINING_QUEUE \
+$     -Dmapreduce.job.queuename=training \
 $     -input input -output output -mapper mapper.py \
 $     -reducer reducer.py -file mapper.py -file reducer.py
                         </code></pre>
@@ -367,21 +376,40 @@ snaketail       10
                 </section>
 
                 <section id="spark">
-                    <h2>Spark</h2>
-                    <pre><code>
-$ spark-shell --master yarn-client --queue HADOOP_PRES_TRAINING_QUEUE
+
+                    <section id="spark-code">
+                        <h2>Spark</h2>
+                        <pre><code>
+$ spark-shell --master yarn-client --queue training
 $
-# Now in interactive Spark console (Scala)
-# The Python API is virtually identical
+$ > // Now in interactive Spark console (Scala)
+$ > // The Python API is virtually identical
 $ > val ngrams = sc.textFile("ngrams.data")
 $ > val columns = ngrams.map(line => line.split("\t"))
 $ > val filtered = columns.filter(arr => arr(3).toInt == 1)
 $ > val reducable = filtered.map(arr => (arr(1), 1))
 $ > val answer = reducable.reduceByKey((a, b) => a + b)
-$ > answer.first()
-                    </code></pre>
-                    <br />
-                    <p>Spark supports applying transformations to entire datasets (called Resilient Distributed Datasets). This functional programming model allows complicated transformations to be expressed simply.</p>
+$ > answer.collect()
+                        </code></pre>
+                    </section>
+
+                    <section id="spark-explain">
+                        <h2>Spark Continued</h2>
+                        <br />
+                        <p>
+                        Spark supports applying transformations to entire
+                        datasets (called Resilient Distributed Datasets). This
+                        functional programming model allows complicated
+                        transformations to be expressed simply.
+                        </p>
+                        <br />
+                        <p>
+                        Writing Spark applications for submission use requires
+                        Java/Scala/Python programming knowledge, which is not
+                        covered in this presentation.
+                        </p>
+                    </section>
+
                 </section>
 
                 <section id="choosing">
