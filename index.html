@@ -144,7 +144,8 @@ $ hdfs dfs -get hdfsfile  localdirectory/
 
 # distcp is handy for very large files
 # but requires a shared filesystem (/scratch)
-$ hdfs dfs -distcp file:///scratch/my/files hdfs:///user/my/files
+$ hadoop distcp -Dmapreduce.job.queuename=my_queue \
+      file:///scratch/my/files hdfs://fladoop/user/my/files
                     </code></pre>
                 </section>
 
