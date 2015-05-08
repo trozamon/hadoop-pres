@@ -139,7 +139,10 @@ $ hdfs dfs -ls arcdata
                     <h2>Moving to and from HDFS</h2>
                     <h3>get / put / distcp</h3>
                     <pre><code>
-$ hdfs dfs -put localfile hdfsdirectory/
+$ git clone git://github.com/trozamon/hadoop-pres.git
+$ hdfs dfs -put hadoop-pres/ngrams.data .
+$ hdfs dfs -put hadoop-pres/ngrams.data ngrams.hive
+
 $ hdfs dfs -get hdfsfile  localdirectory/
 
 # distcp is handy for very large files
@@ -212,8 +215,7 @@ hive> SELECT ngram, COUNT(ngram) FROM ngrams WHERE volumes = 1 GROUP BY ngram;
                     <section id="hive-run-file">
                         <h2>Running SQL files</h2>
                         <pre><code>
-$ hive --hiveconf mapreduce.job.queuename=training \
-$     -f ngrams.sql
+$ hive --hiveconf mapreduce.job.queuename=training -f ngrams.sql
                         </code></pre>
                     </section>
 
@@ -359,9 +361,9 @@ for year in sorted(year_count.keys()):
                         <br />
                         <pre><code>
 $ yarn jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
-$     -Dmapreduce.job.queuename=training \
-$     -input input -output output -mapper mapper.py \
-$     -reducer reducer.py -file mapper.py -file reducer.py
+    -Dmapreduce.job.queuename=training \
+    -input input -output output -mapper mapper.py \
+    -reducer reducer.py -file mapper.py -file reducer.py
                         </code></pre>
                         <br />
                         <pre><code>
@@ -385,14 +387,14 @@ snaketail       10
                         <pre><code>
 $ spark-shell --master yarn-client --queue training
 $
-$ > // Now in interactive Spark console (Scala)
-$ > // The Python API is virtually identical
-$ > val ngrams = sc.textFile("ngrams.data")
-$ > val columns = ngrams.map(line => line.split("\t"))
-$ > val filtered = columns.filter(arr => arr(3).toInt == 1)
-$ > val reducable = filtered.map(arr => (arr(1), 1))
-$ > val answer = reducable.reduceByKey((a, b) => a + b)
-$ > answer.collect()
+> // Now in interactive Spark console (Scala)
+> // The Python API is virtually identical
+> val ngrams = sc.textFile("ngrams.data")
+> val columns = ngrams.map(line => line.split("\t"))
+> val filtered = columns.filter(arr => arr(3).toInt == 1)
+> val reducable = filtered.map(arr => (arr(1), 1))
+> val answer = reducable.reduceByKey((a, b) => a + b)
+> answer.collect()
                         </code></pre>
                     </section>
 
