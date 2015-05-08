@@ -190,13 +190,14 @@ $ hdfs dfs -put hadoop-pres/ngrams.data ngrams.data
                         <pre><code>
 $ hive --hiveconf mapreduce.job.queuename=training
 $
-$ > # Now in interactive Hive console
-$ >
-$ > CREATE TABLE ngrams (ngram STRING, year INT, matches BIGINT,
-$ >     volumes BIGINT) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
-$ >
-$ > LOAD DATA INPATH 'ngrams.data' OVERWRITE INTO TABLE ngrams;
-$ > QUIT;
+hive> # Now in interactive Hive console
+hive>
+hive> CREATE TABLE ngrams (ngram STRING, year INT, matches BIGINT,
+          volumes BIGINT) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+hive>
+hive> LOAD DATA INPATH 'ngrams.data' OVERWRITE INTO TABLE ngrams;
+hive>
+hive> QUIT;
                         </code></pre>
                     </section>
 
@@ -204,7 +205,7 @@ $ > QUIT;
                         <pre><code>
 $ hive --hiveconf mapreduce.job.queuename=training
 $
-$ > SELECT ngram, COUNT(ngram) FROM ngrams WHERE volumes = 1 GROUP BY ngram;
+hive> SELECT ngram, COUNT(ngram) FROM ngrams WHERE volumes = 1 GROUP BY ngram;
                         </code></pre>
                     </section>
 
@@ -249,14 +250,14 @@ snaketail 10
                         <pre><code>
 $ pig -Dmapreduce.job.queuename=training
 $
-$ > # Now in interactive Pig console
-$ > data = LOAD 'ngrams.data' AS (ngram:chararray, year:int, matches:long,
-$ >     volumes:long);
-$ > filtered = FILTER data BY volumes == 1;
-$ > grouped = GROUP filtered BY ngram;
-$ > answer = FOREACH grouped GENERATE group, SUM($1.volumes);
-$ > ordered = ORDER answer BY $0 ASC;
-$ > DUMP ordered;
+grunt> # Now in interactive Pig console
+grunt> data = LOAD 'ngrams.data' AS (ngram:chararray, year:int, matches:long,
+           volumes:long);
+grunt> filtered = FILTER data BY volumes == 1;
+grunt> grouped = GROUP filtered BY ngram;
+grunt> answer = FOREACH grouped GENERATE group, SUM($1.volumes);
+grunt> ordered = ORDER answer BY $0 ASC;
+grunt> DUMP ordered;
                         </code></pre>
                     </section>
 
