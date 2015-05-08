@@ -1,5 +1,5 @@
-
 <!doctype html>
+
 <html lang="en">	
     <head>
         <!-- taken from tutorial http://htmlcheats.com/reveal-js/reveal-js-tutorial-reveal-js-for-beginners/ -->
@@ -106,18 +106,9 @@
                 <section id="dfs">
                     <h2>Common HDFS Commands</h2>
                     <pre><code data-trim>
-# List files HDFS home directory
-$ hdfs dfs -ls
-$ hdfs dfs -ls /user/brockp
-
-# Make a directory
-$ hdfs dfs -mkdir directory
-
-# Get full list of HDFS options
-$ hdfs dfs -help
-
-# Get help with single HDFS option, leave off the -
-$ hdfs dfs -help ls
+                    <%=
+                      File.read('warez/hdfs.sh')
+                      %>
                     </code></pre>
                 </section>
 
@@ -138,17 +129,8 @@ $ hdfs dfs -ls arcdata
                 <section id="hdfs-get-put">
                     <h2>Moving to and from HDFS</h2>
                     <h3>get / put / distcp</h3>
-                    <pre><code>
-$ git clone git://github.com/trozamon/hadoop-pres.git
-$ hdfs dfs -put hadoop-pres/ngrams.data .
-$ hdfs dfs -put hadoop-pres/ngrams.data ngrams.hive
-
-$ hdfs dfs -get hdfsfile  localdirectory/
-
-# distcp is handy for very large files
-# but requires a shared filesystem (/scratch)
-$ hadoop distcp -Dmapreduce.job.queuename=my_queue \
-      file:///scratch/my/files hdfs://fladoop/user/my/files
+                    <pre><code data-trim>
+                    <%= File.read('warez/hdfs_xfer.sh') %>
                     </code></pre>
                 </section>
 
@@ -158,13 +140,6 @@ $ hadoop distcp -Dmapreduce.job.queuename=my_queue \
                         <li>NGrams schema: word ,year, occurrences, volumes</li>
                         <li>Task: Find number of words per year that occur in only one volume</li>
                     </ul>
-                    <br />
-                    <br />
-                    <p>Put in the data</p>
-                    <pre><code>
-$ git clone git://github.com/trozamon/hadoop-pres.git
-$ hdfs dfs -put hadoop-pres/ngrams.data ngrams.data
-                    </code></pre>
                 </section>
 
                 <section id="hive">
@@ -189,19 +164,19 @@ $ hdfs dfs -put hadoop-pres/ngrams.data ngrams.data
                         <p>Note: The below code is in hadoop-pres/ngrams.sql</p>
                     </section>
 
+                    <section id="hive-start">
+                      <pre>
+<code data-trim>
+<%= File.read('warez/hive.sh') %>
+</code>
+                      </pre>
+                    </section>
                     <section id="hive-create-table">
-                        <pre><code>
-$ hive --hiveconf mapreduce.job.queuename=training
-$
-hive> # Now in interactive Hive console
-hive>
-hive> CREATE TABLE ngrams (ngram STRING, year INT, matches BIGINT,
-          volumes BIGINT) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
-hive>
-hive> LOAD DATA INPATH 'ngrams.data' OVERWRITE INTO TABLE ngrams;
-hive>
-hive> QUIT;
-                        </code></pre>
+                      <pre>
+<code data-trim>
+<%= File.read('warez/ngrams.sql') %>
+</code>
+                      </pre>
                     </section>
 
                     <section id="hive-simple">
