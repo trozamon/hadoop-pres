@@ -9,4 +9,4 @@ spark-submit --master yarn-client \
     --queue training \
     --num-executors 2 \
     --executor-memory 3g \
-    warez/pyspark.py
+    warez/ngrams-spark.py
