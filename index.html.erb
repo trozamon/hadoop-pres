@@ -376,7 +376,7 @@ snaketail       10
                       <pre>
 <code>
 <%=
-  raw = File.read('warez/pyspark.py').split("\n")
+  raw = File.read('warez/ngrams-spark.py').split("\n")
   no_comments = Array.new
   raw.each do |line|
     if not line =~ /^#/ and not line.empty?
