@@ -30,379 +30,390 @@
             <!-- Wrap all slides in a single "slides" class -->
             <div class="slides">
 
-                <section id="title">
-                    <h1>Big Data with Hadoop and Spark</h1>
-                    <br />
-                    <p>Brock Palen</p>
-                    <p>brockp@umich.edu</p>
-                    <br />
-                    <p>Alec Ten Harmsel</p>
-                    <p>talec@umich.edu</p>
+              <section id="title">
+                <h1>Big Data Research</h1>
+                <h3>Using Hadoop, Spark, and other tools</h3>
+                <br />
+                <center>
+                <table>
+                  <tr>
+                    <td>Brock Palen</td>
+                    <td style="text-align: right;"><a href="mailto:brockp@umich.edu">brockp@umich.edu</a></td>
+                  </tr>
+                  <tr>
+                    <td>Alec Ten Harmsel</td>
+                    <td style="text-align: right;"><a href="mailto:talec@umich.edu">talec@umich.edu</a></td>
+                  </tr>
+                </table>
+                <center>
+              </section>
+
+              <section id="what-is-hadoop">
+                <h2>What is Hadoop?</h2>
+                <p>
+                Apache Hadoop is a
+                <strong class="fragment highlight-green">framework</strong>
+                for
+                <strong class="fragment highlight-green">distributed processing</strong>
+                of large data sets across clusters of computers using simple
+                programming models. It is designed to scale up from single
+                servers to thousands of machines by co-locating data and
+                computation on each machine.
+                </p>
+                <br />
+                <br />
+                <p>
+                Fladoop is the name of the trial ARC-TS Hadoop cluster.
+                </p>
+              </section>
+
+              <section id="links">
+                <h2>Links and Tutorials</h2>
+                <a href="http://caen.github.io/hadoop">ARC Fladoop Documentation</a><br />
+                <a href="http://fluxhpc.blogspot.com/2014/09/arc-fladoop-data-platform-hadoop.html">Hardware - Fladoop Architecture</a><br />
+                <a href="https://www.udacity.com/course/ud617">Free UDACITY Hadoop/MapReduce Course Materials</a><br />
+                <a href="http://www.cloudera.com/content/cloudera/en/products-and-services/cloudera-live.html">Cloudera Quickstart VM</a><br />
+                <iframe width="420" height="315" src="http://www.youtube.com/embed/bcjSe0xCHbE" frameborder="0" allowfullscreen></iframe>
+              </section>
+
+              <section id="avoid-map-reduce">
+                <h2>Avoid Writing MapReduce Code</h2>
+                <ul>
+                  <li>Lowest level of control in Hadoop</li>
+                  <li>Most difficult to work with</li>
+                  <li>Requires Java knowledge and lots of boilerplate code</li>
+                </ul>
+              </section>
+
+              <aside class="notes" data-markdown>
+                <p>
+                - Don't focus on MapReduce. 
+                - It is difficult and requires building a pair of Java classes.  Most users with big data will be better served by using applications on top of Hadoop. Think of this as writing your own program, vs. using an exsiting one (C-Code vs. R).
+                </p>
+              </aside>
+
+              <section id="alternatives">
+                <h2>Tools for Analysis</h2>
+                <h3>Alternatives to Writing MapReduce Code</h3>
+                <ul>
+                  <li><a href="http://hive.apache.org/">Hive - SQL on Hadoop</a></li>
+                  <li><a href="http://pig.apache.org/">Pig - SQL-like analysis language</a></li>
+                  <li><a href="http://spark.apache.org/">Spark - A fast, general compute engine</a></li>
+                  <li><a href="http://mahout.apache.org/">Mahout - A machine learning and data mining library</a></li>
+                </ul>
+              </section>
+
+              <section id="hdfs">
+                <h2>The Hadoop File System (HDFS)</h2>
+                <img src="images/fladoop-hdfs.png">
+              </section>
+
+              <section id="hdfs-about">
+                <h2>About HDFS</h2>
+                <ul>
+                  <li>Distributed and fault tolerant</li>
+                  <li>Requires use of HDFS-specific tools</li>
+                  <li>Looks like POSIX filesystems</li>
+                  <li>Optimized for read performance</li>
+                </ul>
+              </section>
+
+              <section id="dfs">
+                <h2>Common HDFS Commands</h2>
+                <pre>
+<code data-trim>
+<%= File.read('warez/hdfs.sh') %>
+</code>
+                </pre>
+              </section>
+
+              <section id="hdfs-practice1">
+
+                <section id="hdfs-practice1-q">
+                  <h2>HDFS Practice</h2>
+                  <br />
+                  <p>Create a directory in HDFS called <code>arcdata</code> and check its contents.</p>
                 </section>
 
-                <section id="what-is-hadoop">
-                    <h2>What is Hadoop?</h2>
-                    <p>The Apache Hadoop software library is a <strong class="fragment highlight-green">framework</strong> that allows for the <strong class="fragment highlight-green">distributed processing</strong> of large data sets across clusters of computers using simple programming models. It is designed to scale up from single servers to thousands of machines, each offering local computation and storage.</p>
-                    <br />
-                    <br />
-                    <h3>What is Fladoop?</h3>
-                    <p>Fladoop is the name of the ARC-TS Hadoop cluster, just as Flux is the name of the ARC-TS HPC cluster.</p>
+                <section id="hdfs-practice1-ans">
+                  <pre>
+<code data-trim>
+hdfs dfs -mkdir arcdata
+hdfs dfs -ls arcdata
+</code>
+                  </pre>
                 </section>
 
-                <section id="links">
-                    <h1>Links / Guides</h1>
-                    <a href="http://caen.github.io/hadoop">ARC Fladoop Documentation</a><br />
-                    <a href="http://fluxhpc.blogspot.com/2014/09/arc-fladoop-data-platform-hadoop.html">Hardware - Fladoop Architecture</a><br />
-                    <a href="https://www.udacity.com/course/ud617">Free UDACITY Hadoop/MapReduce Course Materials</a><br />
-                    <a href="http://www.cloudera.com/content/cloudera/en/products-and-services/cloudera-live.html">Cloudera Quickstart VM</a><br />
-                    <iframe width="420" height="315" src="http://www.youtube.com/embed/bcjSe0xCHbE" frameborder="0" allowfullscreen></iframe>
+              </section>
+
+              <section id="hdfs-get-put">
+                <h2>Moving to and from HDFS</h2>
+                <h3>get / put / distcp</h3>
+                <pre>
+<code data-trim>
+<%= File.read('warez/hdfs_xfer.sh') %>
+</code>
+                </pre>
+              </section>
+
+              <section id="hadoop-examples">
+                <h2>Tool Examples</h2>
+                <ul>
+                  <li>Task: Find number of words per year that occur in only one volume</li>
+                  <li>Dataset: Google NGrams (specifically 1-grams)</li>
+                  <li>NGrams schema: word, year, occurrences, volumes</li>
+                  <li>NGrams dataset is tab separated</li>
+                </ul>
+              </section>
+
+              <section id="hive">
+
+                <section id="hive-intro">
+                  <h2>Hive</h2>
+                  <ul>
+                    <li>SQL layer on Hadoop</li>
+                    <li>Supports most reading SQL queries</li>
+                    <li>Supports few writing SQL queries</li>
+                    <li>Fastest from idea to result</li>
+                  </ul>
                 </section>
 
-                <section id="avoid-map-reduce">
-                    <h2>Avoid MapReduce</h2>
-                    <ul>
-
-                        <li>Lowest level way to control Hadoop</li>
-                        <li>Most difficult to work with</li>
-                        <li>Java - Take it as you will</li>
-
-                    </ul>
-                </section>
-
-                <aside class="notes" data-markdown>
-                    <p>
-                    - Don't focus on MapReduce. 
-                    - It is difficult and requires building a pair of Java classes.  Most users with big data will be better served by using applications on top of Hadoop. Think of this as writing your own program, vs. using an exsiting one (C-Code vs. R).
-                    </p>
-                </aside>
-
-                <section id="alternatives">
-                    <h2>Alternatives to MapReduce</h2>
-                    <ul>
-                        <li><a href="http://hive.apache.org/">Hive - Data Warehouse - SQL Like</a></li>
-                        <li><a href="http://pig.apache.org/">Pig - Platform for analyzing large data sets</a></li>
-                        <li><a href="http://spark.apache.org/">Spark - A fast and general compute engine for Hadoop data, Graph Data, and Machine Learning</a></li>
-                        <li><a href="http://mahout.apache.org/">Mahout - A Scalable machine learning and data mining library</a></li>
-                    </ul>
-                    <p>More on these later</p>
-                </section>
-
-                <section id="hdfs">
-                    <h2>The Hadoop File System (HDFS)</h2>
-                    <!-- TODO Fix this image - has fladdop instead of fladoop -->
-                    <img src="images/fladoop-hdfs.png">
-                </section>
-
-                <section id="hdfs-about">
-                    <h2>About HDFS</h2>
-                    <ul>
-                        <li>Distributed and fault tolerant</li>
-                        <li>Can’t use typical tools(cp, mv, mkdir)</li>
-                        <li>Hadoop has HDFS-specific implementations of common tools</li>
-                        <li>Looks like POSIX filesystems</li>
-                    </ul>
-                </section>
-
-                <section id="dfs">
-                    <h2>Common HDFS Commands</h2>
-                    <pre><code data-trim>
-                    <%=
-                      File.read('warez/hdfs.sh')
-                      %>
-                    </code></pre>
-                </section>
-
-                <section id="hdfs-practice1">
-                    <section id="hdfs-practice1-q">
-                        <h2>HDFS Practice</h2>
-                        <br />
-                        <p>Create a directory in HDFS called <code>arcdata</code> and check its contents.</p>
-                    </section>
-                    <section id="hdfs-practice1-ans">
-                        <pre><code>
-$ hdfs dfs -mkdir arcdata
-$ hdfs dfs -ls arcdata
-                        </code></pre>
-                    </section>
-                </section>
-
-                <section id="hdfs-get-put">
-                    <h2>Moving to and from HDFS</h2>
-                    <h3>get / put / distcp</h3>
-                    <pre><code data-trim>
-                    <%= File.read('warez/hdfs_xfer.sh') %>
-                    </code></pre>
-                </section>
-
-                <section id="hadoop-examples">
-                    <h2>Hadoop Examples</h2>
-                    <ul>
-                        <li>NGrams schema: word ,year, occurrences, volumes</li>
-                        <li>Task: Find number of words per year that occur in only one volume</li>
-                    </ul>
-                </section>
-
-                <section id="hive">
-
-                    <section id="hive-intro">
-                        <h2>Hive</h2>
-                        <ul>
-                            <li>Supports most of SQL</li>
-                            <li>Fastest from idea to result</li>
-                        </ul>
-                        <br />
-                        <br />
-                        <p>Go down for:</p>
-                        <br />
-                        <ol>
-                            <li>Creating a Table</li>
-                            <li>Running queries</li>
-                            <li>Results</li>
-                        </ol>
-                        <br />
-                        <br />
-                        <p>Note: The below code is in hadoop-pres/ngrams.sql</p>
-                    </section>
-
-                    <section id="hive-start">
-                      <pre>
+                <section id="hive-start">
+                  <h2>Starting Hive</h2>
+                  <pre>
 <code data-trim>
 <%= File.read('warez/hive.sh') %>
 </code>
-                      </pre>
-                    </section>
-                    <section id="hive-create-table">
-                      <pre>
-<code data-trim>
-<%= File.read('warez/ngrams.sql') %>
+                  </pre>
+                </section>
+
+                <section id="hive-create-table">
+                  <h2>Creating a Table</h2>
+                  <br />
+                  <pre>
+<code>
+<%= File.read('warez/ngrams_create.sql') %>
 </code>
-                      </pre>
-                    </section>
+                  </pre>
+                </section>
 
-                    <section id="hive-simple">
-                        <pre><code>
-$ hive --hiveconf mapreduce.job.queuename=training
-$
-hive> SELECT ngram, COUNT(ngram) FROM ngrams WHERE volumes = 1 GROUP BY ngram;
-                        </code></pre>
-                    </section>
+                <section id="hive-simple">
+                  <h2>Querying the Data</h2>
+                  <br />
+                  <pre>
+<code>
+<%= File.read('warez/ngrams_query.sql') %>
+</code>
+                  </pre>
+                </section>
 
-                    <section id="hive-run-file">
-                        <h2>Running SQL files</h2>
-                        <pre><code>
-$ hive --hiveconf mapreduce.job.queuename=training -f ngrams.sql
-                        </code></pre>
-                    </section>
-
-                    <section id="hive-results">
-                        <pre><code>
+                <section id="hive-results">
+                  <h2>Query Result</h2>
+                  <br />
+                  <pre>
+<code>
 snake 22
 snaketail 10
-                        </code></pre>
-                    </section>
-
+</code>
+                  </pre>
                 </section>
 
-                <section id="pig">
+              </section>
 
-                    <section id="pig-intro">
-                        <h2>Pig</h2>
-                        <br />
-                        <ul>
-                            <li>Similar to but more in-depth than SQL</li>
-                            <li>Supports complex transformations that can't be cleanly done in SQL</li>
-                        </ul>
-                        <br />
-                        <br />
-                        <p>Go down for:</p>
-                        <br />
-                        <ol>
-                            <li>Running interactive jobs</li>
-                            <li>Running scripts</li>
-                            <li>Results</li>
-                        </ol>
-                    </section>
+              <section id="pig">
 
-                    <section id="pig-interactive">
-                        <pre><code>
-$ pig -Dmapreduce.job.queuename=training
-$
-grunt> # Now in interactive Pig console
-grunt> data = LOAD 'ngrams.data' AS (ngram:chararray, year:int, matches:long,
-           volumes:long);
-grunt> filtered = FILTER data BY volumes == 1;
-grunt> grouped = GROUP filtered BY ngram;
-grunt> answer = FOREACH grouped GENERATE group, SUM($1.volumes);
-grunt> ordered = ORDER answer BY $0 ASC;
-grunt> DUMP ordered;
-                        </code></pre>
-                    </section>
-
-                    <section id="pig-file">
-                        <br />
-                        <p>The 'ngrams.pig' file can be run with the command below:</p>
-                        <br />
-                        <pre><code>
-$ cd hadoop-pres
-$ pig -Dmapreduce.job.queuename=training -f ngrams.pig
-$
-$ # Running locally
-$ pig -x local -f ngrams.pig
-                        </code></pre>
-                    </section>
-
-                    <section id="pig-results">
-                        <pre><code>
-                       (snake,22)
-                       (snaketail,10)
-                        </code></pre>
-                    </section>
-
+                <section id="pig-intro">
+                  <h2>Pig</h2>
+                  <br />
+                  <ul>
+                    <li>Similar to but more in-depth than SQL</li>
+                    <li>Better than SQL for complex transformations</li>
+                    <li>Slower than Hive</li>
+                  </ul>
                 </section>
 
-                <section id="python">
+                <section id="pig-shell">
+                  <h2>Running Pig code</h2>
+                  <br />
+                  <pre>
+<code>
+<%= File.read('warez/pig.sh') %>
+</code>
+                  </pre>
+                </section>
 
-                    <section id="python-intro">
-                        <h2>Hadoop Streaming: Python</h2>
-                        <ul>
-                            <li>Map and reduce in Python</li>
-                            <li>Code reads from STDIN and writes to STDOUT</li>
-                        </ul>
-                        <br />
-                        <br />
-                        <p>Go down for:</p>
-                        <br />
-                        <ol>
-                            <li>mapper.py</li>
-                            <li>reducer.py</li>
-                            <li>Submitting a Python job</li>
-                            <li>Results</li>
-                        </ol>
-                    </section>
+                <section id="pig-code">
+                  <h2>Pig Code</h2>
+                  <br />
+                  <pre>
+<code>
+<%=
+  raw = File.read('warez/ngrams.pig').split("\n")
+  no_comments = Array.new
+  raw.each do |line|
+    if not line =~ /^#/ and not line.empty?
+      no_comments << line
+    end
+  end
+  no_comments.join("\n")
+  %>
+</code>
+                  </pre>
+                </section>
 
-                    <section id="python-mapper">
-                        <h2>Mapper</h2>
-                        <br />
-                        <pre><code class="python">
-#!/usr/bin/env python3.3
+                <section id="pig-results">
+                  <h2>Pig Results</h2>
+                  <br />
+                  <pre>
+<code>
+(snake,22)
+(snaketail,10)
+</code>
+                  </pre>
+                </section>
 
-for line in fileinput.input():
-    split = line.split("\t")
-    if int(split[3]) == 1:
-        print('\t'.join([split[1], '1']))
-                        </code></pre>
-                    </section>
-                    <section id="python-mapper-explain">
-                        <h2>Mapper Continued</h2>
-                        <br />
-                        <ol>
-                            <li>Iterate over STDIN with fileinput.</li>
-                            <li>Split each line.</li>
-                            <li>Check if the ngram is only in one volume.</li>
-                            <li>If so, print out the year and a '1' as a tab-separated key-value pair.</li>
-                        </ol>
-                    </section>
+              </section>
+
+              <section id="python">
+
+                <section id="python-intro">
+                  <h2>Hadoop Streaming: Python</h2>
+                  <br />
+                  <ul>
+                    <li>Map and reduce in Python</li>
+                    <li>Code reads from STDIN and writes to STDOUT</li>
+                    <li>Slow due to interpreter start-up overhead</li>
+                    <li>Slow due to short task lives - JIT does not help</li>
+                  </ul>
+                </section>
+
+                <section id="python-mapper">
+                  <h2>Mapper</h2>
+                  <br />
+                  <pre>
+<code class="python">
+<%= File.read('warez/map.py') %>
+</code>
+                  </pre>
+                </section>
+
+                <section id="python-mapper-explain">
+                  <h2>Mapper Continued</h2>
+                  <br />
+                  <ol>
+                    <li>Iterate over STDIN with fileinput.</li>
+                    <li>Split each line.</li>
+                    <li>Check if the ngram is only in one volume.</li>
+                    <li>If so, print out the year and a '1' as a tab-separated key-value pair.</li>
+                  </ol>
+                </section>
 
                     <section id="python-reducer">
                         <h2>Reducer</h2>
                         <br />
-                        <pre><code class="python">
-#!/usr/bin/env python3.3
-
-import fileinput
-
-year_count = dict()
-for line in fileinput.input():
-    tmp = line.split('\t')
-    if tmp[0] not in year_count.keys():
-        year_count[tmp[0]] = 0
-    year_count[tmp[0]] = year_count[tmp[0]] + 1
-for year in sorted(year_count.keys()):
-    print('\t'.join([year, str(year_count[year])]))
-                        </code></pre>
+                        <pre>
+<code class="python">
+<%= File.read('warez/reduce.py') %>
+</code>
+                        </pre>
                     </section>
 
                     <section id="python-reducer-explain">
-                        <h2>Reducer Continued</h2>
-                        <br />
-                        <ol>
-                            <li>Sum the amount of ngrams that only appear in one volume by year</li>
-                            <li>Print the sorted result</li>
-                        </ol>
+                      <h2>Reducer Continued</h2>
+                      <br />
+                      <ol>
+                        <li>Sum the amount of ngrams that only appear in one volume by year</li>
+                        <li>Print the sorted result</li>
+                      </ol>
                     </section>
 
                     <section id="python-running">
-                        <h2>Sumbitting Python</h2>
-                        <br />
-                        <pre><code>
-$ yarn jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
-    -Dmapreduce.job.queuename=training \
-    -input input -output output -mapper mapper.py \
-    -reducer reducer.py -file mapper.py -file reducer.py
-                        </code></pre>
-                        <br />
-                        <pre><code>
-$ cat ngrams.data | python3 mapper.py | python3 reducer.py
-                        </code></pre>
+                      <h2>Sumbitting Python</h2>
+                      <br />
+                      <pre>
+<code>
+<%= File.read('warez/python.sh') %>
+</code>
+                      </pre>
                     </section>
 
                     <section id="python-results">
-                        <pre><code>
+                      <pre>
+<code>
 snake   22
 snaketail       10
-                        </code></pre>
+</code>
+                      </pre>
                     </section>
 
-                </section>
+                  </section>
 
-                <section id="spark">
+                  <section id="spark">
 
-                    <section id="spark-code">
-                        <h2>Spark</h2>
-                        <pre><code>
-$ spark-shell --master yarn-client --queue training
-$
-> // Now in interactive Spark console (Scala)
-> // The Python API is virtually identical
-> val ngrams = sc.textFile("ngrams.data")
-> val columns = ngrams.map(line => line.split("\t"))
-> val filtered = columns.filter(arr => arr(3).toInt == 1)
-> val reducable = filtered.map(arr => (arr(1), 1))
-> val answer = reducable.reduceByKey((a, b) => a + b)
-> answer.collect()
-                        </code></pre>
+                    <section id="spark-intro">
+                      <h2>Spark</h2>
+                      <br />
+                      <ul>
+                        <li>Spark supports Scala, Java, and Python</li>
+                        <li>Packaging Scala and Java for job submission is complicated</li>
+                        <li>Spark examples will be shown in Python</li>
+                        <li>PySpark, the Python API, is slower than the Scala/Java API</li>
+                      </ul>
+                    </section>
+
+                    <section id="pyspark-shell">
+                      <h2>PySpark Shell and Submission</h2>
+                      <pre>
+<code>
+<%= File.read('warez/pyspark.sh') %>
+</code>
+                      </pre>
+                    </section>
+
+                    <section id="pyspark-code">
+                      <h2>PySpark code</h2>
+                      <br />
+                      <pre>
+<code>
+<%=
+  raw = File.read('warez/pyspark.py').split("\n")
+  no_comments = Array.new
+  raw.each do |line|
+    if not line =~ /^#/ and not line.empty?
+      no_comments << line
+    end
+  end
+  no_comments.join("\n")
+  %>
+</code>
+                      </pre>
                     </section>
 
                     <section id="spark-explain">
-                        <h2>Spark Continued</h2>
-                        <br />
-                        <p>
-                        Spark supports applying transformations to entire
-                        datasets (called Resilient Distributed Datasets). This
-                        functional programming model allows complicated
-                        transformations to be expressed simply.
-                        </p>
-                        <br />
-                        <p>
-                        Writing Spark applications for submission use requires
-                        Java/Scala/Python programming knowledge, which is not
-                        covered in this presentation.
-                        </p>
+                      <h2>Spark Continued</h2>
+                      <br />
+                      <p>
+                      Spark applies transformations to entire datasets
+                      (called Resilient Distributed Datasets). This
+                      functional programming model allows complicated
+                      transformations to be expressed simply and in a
+                      parallel way.
+                      </p>
                     </section>
 
-                </section>
+                  </section>
 
-                <section id="choosing">
+                  <section id="choosing">
                     <h2>Choosing a tool and language</h2>
                     <br />
                     <ul>
-                        <li>Working on structured data? Use Hive or Pig.</li>
-                        <li>Working on unstructured data? Use Python or Scala.</li>
-                        <li>Need extremely high performance? Use Java or Scala.</li>
+                      <li>Working on structured data? Use Hive or Pig.</li>
+                      <li>Working on unstructured data? Use Python or Scala.</li>
+                      <li>Need extremely high performance? Use Java or Scala.</li>
                     </ul>
-                </section>
+                  </section>
 
-                <section id="testing-locally">
+                  <section id="testing-locally">
                     <h2>Testing Locally</h2>
                     <br />
                     <p>
@@ -412,7 +423,7 @@ $
                     that provides a pre-built environment for testing Pig and
                     Spark if you are a Docker user.
                     </p>
-                </section>
+                  </section>
 
             </div>
         </div>

@@ -7,9 +7,4 @@ CREATE TABLE ngrams (ngram STRING, year INT, matches BIGINT,
 
 -- Load the data from HDFS into a Hive table. This must be done so that Hive
 -- knows where to find the data.
-LOAD DATA INPATH 'ngrams.data' OVERWRITE INTO TABLE ngrams;
-
--- Execute a query that finds all words that were only in a single volume in
--- any given year.
-SELECT ngram, COUNT(ngram) FROM ngrams WHERE volumes = 1 GROUP BY ngram
-    ORDER BY ngram;
+LOAD DATA INPATH 'ngrams.hive' OVERWRITE INTO TABLE ngrams;
